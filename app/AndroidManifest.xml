@@ -37,6 +37,8 @@
             </intent-filter>
         </activity>
         
+        <service android:enabled="true" android:name="jiunling.service.BackgroundService"/>
+        
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
