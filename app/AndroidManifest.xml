@@ -7,6 +7,20 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
+    
+    <!-- wifi -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    
+    <!-- Internet -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    
+    
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    
+    <permission android:name="jiunling.pass.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="jiunling.pass.permission.C2D_MESSAGE" /> 
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +36,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="jiunling.pass" />
+            </intent-filter>
+        </receiver>
+        
+        <service android:enabled="true" android:name=".GCMIntentService" />
     </application>
 
 </manifest>
