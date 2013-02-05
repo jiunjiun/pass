@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>123</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<input type="text" id="test" />
+		<button>submit</button>
+		<script>
+			$(function() {
+				$(document).on('click', 'button', function() {
+					$.ajax({
+						url: 'http://localhost:8080/api/find/',
+						type: 'POST',
+						data: {
+							m : '14:d6:4d:37:29'
+						},
+						dataType:"json",
+						error: function(xhr) {
+							console.log('Ajax request hava error.');
+						},
+						success: function(request) {
+							console.log(request);
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

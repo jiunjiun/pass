@@ -15,12 +15,18 @@
 # limitations under the License.
 #
 import webapp2
-from controllers.home 	import home
-from controllers.api 	import index
-from controllers.api 	import find
+from google.appengine.ext.webapp import template
 
-app = webapp2.WSGIApplication([
-    ('/', home),
-	('/api/', index),
-	('/api/find/', find)
-], debug=True)
+class index(webapp2.RequestHandler):
+	def get(self):
+		self.response.out.write(template.render('template/layout.html',''))
+
+class find(webapp2.RequestHandler):
+	def get(self):
+		self.response.write('123')
+		
+	def post(self):
+		from django.utils import simplejson as json
+		mac = self.request.get('m')
+		result = json.dumps( mac )
+		self.response.write(result)
