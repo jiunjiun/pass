@@ -66,8 +66,8 @@ nosetests.xml
 .project
 .pydevproject
 
-.bat
-.sh
+*.bat
+*.sh
 # -------------------
 
 # Config
