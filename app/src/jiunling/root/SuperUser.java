@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.util.Log;
 
@@ -58,11 +60,21 @@ public class SuperUser {
 			Process mProcess = Runtime.getRuntime().exec("su");
 			OutputStream os = mProcess.getOutputStream();
 		    InputStream is = mProcess.getInputStream();
-		    writeLine( os, null, "cd /data/misc/wifi/; cat wpa_supplicant.conf" );
+		    writeLine( os, null, command );
 		    writeLine( os, null, "exit" );
 		    mProcess.waitFor();
 			String headerLine = readString( is, null, false );
-			if(D) Log.e(TAG, "BufferedReader: "+ headerLine.toString());
+//			if(D) Log.e(TAG, "BufferedReader: "+ headerLine.toString());
+			
+			Pattern pattern = Pattern.compile("network=[{][^}]+[}]", Pattern.DOTALL | Pattern.MULTILINE);
+			Matcher matcher = pattern.matcher(headerLine);
+			
+			int i=0;
+			Log.e(TAG, "------------------------------");
+	        while (matcher.find()) {
+	        	Log.e(TAG, "matcher.group("+i+"):\t"+matcher.group());
+	        	i++;
+	        }
 		} catch (Exception e) {
 			if(D) Log.d(TAG, "the device is not rooted¡A error message¡G " + e.getMessage());
 			return false;

@@ -1,6 +1,10 @@
 package jiunling.pass;
 
 import static jiunling.service.BackgroundService.haveBackgroundService;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import jiunling.root.SuperUser;
 import jiunling.service.BackgroundService;
 import android.content.Intent;
@@ -60,14 +64,14 @@ public class MainActivity extends SherlockActivity {
     }
     
     private void init() {
-    	/***	Super User	***/
+//    	/***	Super User	***/
 		SuperUser();
-		
-    	/**		­I´º	Service	**/
-    	if(haveBackgroundService){
-    		Intent intent = new Intent(this, BackgroundService.class);
-    	    startService(intent);
-    	}
+//		
+//    	/**		­I´º	Service	**/
+//    	if(haveBackgroundService){
+//    		Intent intent = new Intent(this, BackgroundService.class);
+//    	    startService(intent);
+//    	}
     }
     
     private void SuperUser() {
