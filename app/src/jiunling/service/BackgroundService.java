@@ -1,6 +1,7 @@
 package jiunling.service;
 
 import jiunling.gcm.GCM;
+import jiunling.root.SuperUser;
 import jiunling.wifi.WifiReceiver;
 import android.app.Service;
 import android.content.Intent;
@@ -13,12 +14,13 @@ public class BackgroundService extends Service {
 	private static final String TAG = "BackgroundService";
 	private static final boolean D = true;
 	
+	
 	private GCM mGCM = null;
 	private WifiReceiver mWifiReceiver = null;
 	
 	
 	/***	Background config State		***/
-	public static boolean haveBackgroundService = false;
+	public static boolean haveBackgroundService = true;
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -30,9 +32,11 @@ public class BackgroundService extends Service {
 	public void onStart(Intent intent, int startId) {
 		if(D) Log.e(TAG, "onStart");
 		
+		haveBackgroundService = false;
+		
 		/***	Receiver	***/
-		GCM_Receiver();
-		WiFi_Receiver();
+//		GCM_Receiver();
+//		WiFi_Receiver();
 	}
 	
 	@Override
@@ -42,7 +46,7 @@ public class BackgroundService extends Service {
 		if(D) Log.e(TAG, "onDestroy");
 		DisableReceiver();
 	}
-	
+		
 	private void GCM_Receiver() {
 		if( mGCM == null) mGCM = new GCM(this);
 	}
