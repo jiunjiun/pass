@@ -16,9 +16,11 @@
 #
 import webapp2
 from google.appengine.ext.webapp import template
+from config import config
 
 class index(webapp2.RequestHandler):
 	def get(self):
+		conn = config.get_connection()
 		self.response.out.write(template.render('template/layout.html',''))
 
 class find(webapp2.RequestHandler):
