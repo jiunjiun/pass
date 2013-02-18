@@ -123,6 +123,7 @@ public class WifiHelper {
 
     /** 返回配置列表 */
     public List<WifiConfiguration> getWifiConfigList() {
+    	wifiConfigList = wifiManager.getConfiguredNetworks(); // 掃描配置列表
         return wifiConfigList;
     }
 
