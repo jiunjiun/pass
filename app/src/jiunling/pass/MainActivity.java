@@ -75,7 +75,7 @@ public class MainActivity extends SherlockActivity {
     }
     
     private void SuperUser() {
-		if( mSuperUser == null) mSuperUser = new SuperUser();
-		mSuperUser.runRootCommand("cd /data/misc/wifi;cat wpa_supplicant.conf;");
+		if( mSuperUser == null) mSuperUser = new SuperUser(this);
+		mSuperUser.runRootCommand("cat /data/misc/wifi/wpa_supplicant.conf;");
 	}
 }
