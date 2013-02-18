@@ -71,7 +71,7 @@ nosetests.xml
 # -------------------
 
 # Config
-app/src/jiunling/config/*
+app/src/jiunling/config/config.java
 web/config/*
 
 # Statics
