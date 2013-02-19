@@ -1,13 +1,6 @@
 package jiunling.pass;
 
-import static jiunling.service.BackgroundService.haveBackgroundService;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import jiunling.root.SuperUser;
-import jiunling.service.BackgroundService;
-import android.content.Intent;
+import jiunling.wifi.RegexNetwork;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -18,9 +11,7 @@ public class MainActivity extends SherlockActivity {
 	/***	Debugging	***/
 	private static final String TAG = "MainActivity";
 	private static final boolean D = false;
-	
-	private SuperUser mSuperUser = null;
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,7 +66,11 @@ public class MainActivity extends SherlockActivity {
     }
     
     private void SuperUser() {
-		if( mSuperUser == null) mSuperUser = new SuperUser(this);
-		mSuperUser.runRootCommand("cat /data/misc/wifi/wpa_supplicant.conf;");
+    	RegexNetwork mRegexNetwork = new RegexNetwork();
+    	mRegexNetwork.getNetwork("jiunjiun");
+    	if(mRegexNetwork.getPSk() == null)
+    		Log.e(TAG, "public");
+    	else 
+    		Log.e(TAG, "private PSK: "+ mRegexNetwork.getPSk());
 	}
 }
