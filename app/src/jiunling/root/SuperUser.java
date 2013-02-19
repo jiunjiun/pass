@@ -7,24 +7,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.util.Log;
 
 public class SuperUser {
 	//Debugging
 	private static final String TAG = "command";
 	private static final boolean D = true;
+			
+	private String ShellResult;
 	
-	private Context mContext;
-		
-	public SuperUser(Context context) {
+	public SuperUser() {
 		havaRoot = getRootAhth();		
-		mContext  = context;
 	}
 		
 	private synchronized boolean getRootAhth() {
@@ -55,50 +47,28 @@ public class SuperUser {
 		}
 	}
 	
-	public static void runRoot(String command) {
+	public synchronized boolean runShell(String command) {
 		if(havaRoot) {
-			
+			try {
+				Process mProcess = Runtime.getRuntime().exec("su");
+				OutputStream os = mProcess.getOutputStream();
+			    InputStream is = mProcess.getInputStream();
+			    writeLine( os, null, command );
+			    writeLine( os, null, "exit" );
+			    mProcess.waitFor();
+			    ShellResult = readString( is, null, false );
+				return true;
+			} catch(Exception e) {
+				return false;
+			}
 		}
+		return false;
 	}
 	
-	public boolean runRootCommand(String command) {
-		try {
-			Process mProcess = Runtime.getRuntime().exec("su");
-			OutputStream os = mProcess.getOutputStream();
-		    InputStream is = mProcess.getInputStream();
-		    writeLine( os, null, command );
-		    writeLine( os, null, "exit" );
-		    mProcess.waitFor();
-			String headerLine = readString( is, null, false );
-			
-			Pattern mPattern = Pattern.compile("network=[{][^}]+[}]", Pattern.DOTALL | Pattern.MULTILINE);
-			Matcher mMatcher = mPattern.matcher(headerLine);
-			
-			Log.e(TAG, "------------------------------");
-	        while (mMatcher.find()) {
-	        	Log.e(TAG, "matcher.group():\t"+mMatcher.group());
-	        	Log.e(TAG, "- - - - - - - - -");
-	        	
-	        	String group = mMatcher.group();
-	        	group = group.replace("network=","").replace("\n",",").replace(",}","}").replaceFirst(",","");
-
-	        	
-	        	JSONObject json = new JSONObject(group);
-	        	if(!json.isNull("psk")) {
-	        		Log.e(TAG, "ssid: " + json.getString("ssid") + " password: " + json.getString("psk"));
-	        	} else {
-	        		Log.e(TAG, "ssid: " + json.getString("ssid"));
-	        	}
-	        }
-	       
-        	
-		} catch (Exception e) {
-			if(D) Log.e(TAG, "***** error message¡G " + e.getMessage());
-			return false;
-		} 
-		return true;
+	public String getResult() {
+		return ShellResult;
 	}
-	
+		
 	/** ref:http://fecbob.pixnet.net/blog/post/36062349-%5Bandroid%5D-get-process-id-with-shell-command-and-read-by-java **/
 	private void writeLine(OutputStream os, PrintWriter logWriter, String value) throws IOException {
 		String line = value + "\n";
