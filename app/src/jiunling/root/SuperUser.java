@@ -16,10 +16,10 @@ public class SuperUser {
 	private String ShellResult;
 	
 	public SuperUser() {
-		havaRoot = getRootAhth();		
+		if(!havaRoot) havaRoot = getRootAhth();		
 	}
 		
-	private synchronized boolean getRootAhth() {
+	public static synchronized boolean getRootAhth() {
 		Process process = null;
 		DataOutputStream os = null;
 		try {
