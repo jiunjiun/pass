@@ -72,7 +72,7 @@ nosetests.xml
 
 # Config
 app/src/jiunling/config/config.java
-web/config/*
+web/GAE(python)/config/config.py
 
 # Statics
 statics/*
