@@ -1,7 +1,6 @@
 package jiunling.service;
 
 import jiunling.gcm.GCM;
-import jiunling.root.SuperUser;
 import jiunling.wifi.WifiReceiver;
 import android.app.Service;
 import android.content.Intent;
@@ -36,7 +35,7 @@ public class BackgroundService extends Service {
 		
 		/***	Receiver	***/
 //		GCM_Receiver();
-//		WiFi_Receiver();
+		WiFi_Receiver();
 	}
 	
 	@Override

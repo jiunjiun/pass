@@ -28,7 +28,7 @@ public class Environment {
 		
 	public void CheckHaveSpecifiedWifi() {
 		
-		UpdateWifiHelper();
+//		UpdateWifiHelper();
 		
 	}
 	
