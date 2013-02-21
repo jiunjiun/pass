@@ -1,4 +1,4 @@
 pass
 ====
 
-pass wifi
+wifi-pass 
