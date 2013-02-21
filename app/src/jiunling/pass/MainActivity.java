@@ -1,6 +1,10 @@
 package jiunling.pass;
 
+import static jiunling.config.config.havaRoot;
+import static jiunling.service.BackgroundService.haveBackgroundService;
+import jiunling.service.BackgroundService;
 import jiunling.wifi.RegexNetwork;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -16,7 +20,8 @@ public class MainActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
+		if(!havaRoot) havaRoot = jiunling.root.SuperUser.getRootAhth();
 	}
 	
 	@Override
@@ -54,15 +59,12 @@ public class MainActivity extends SherlockActivity {
         if(D) Log.e(TAG, "--- ON Destroy ---");
     }
     
-    private void init() {
-//    	/***	Super User	***/
-		SuperUser();
-//		
-//    	/**		­I´º	Service	**/
-//    	if(haveBackgroundService){
-//    		Intent intent = new Intent(this, BackgroundService.class);
-//    	    startService(intent);
-//    	}
+    private void init() {		
+    	/**	 backgound Service	**/
+    	if(haveBackgroundService){
+    		Intent intent = new Intent(this, BackgroundService.class);
+    	    startService(intent);
+    	}
     }
     
     private void SuperUser() {
