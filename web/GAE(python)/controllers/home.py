@@ -15,7 +15,9 @@
 # limitations under the License.
 #
 import webapp2
+from google.appengine.ext.webapp import template
+from config import config
 
 class home(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
+	def get(self):	
+		self.response.out.write(template.render('template/layout.html',''))
