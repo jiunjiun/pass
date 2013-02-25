@@ -1,4 +1,4 @@
-T::Application.routes.draw do
+LocalRails::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
