@@ -92,7 +92,7 @@ nosetests.xml
 app/src/jiunling/config/config.java
 web/GAE(python)/config/config.py
 web/GAE(python)/app.yaml
-web/rails/config/database.yml
+web/local_rails/config/database.yml
 
 # Statics
 statics/*
