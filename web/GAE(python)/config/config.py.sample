@@ -1,0 +1,2 @@
+#!/usr/bin/env python
+SERVER_URL = 'your_server_url'
