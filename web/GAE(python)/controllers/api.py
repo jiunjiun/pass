@@ -38,7 +38,7 @@ class register(webapp2.RequestHandler):
 		SERVER_URL = config.SERVER_URL
 		try:
 			reg	= simplejson.loads(self.request.get('reg'))			
-			form_data = 'test[email]=%s&test[gcm]=%s' % (reg['email'], reg['gcm'])
+			form_data = 'user[email]=%s&user[gcm]=%s' % (reg['email'], reg['gcm'])
 			result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 		except Exception: 
 			pass
