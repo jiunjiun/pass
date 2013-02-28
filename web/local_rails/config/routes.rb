@@ -1,4 +1,5 @@
 LocalRails::Application.routes.draw do
+  resources :register
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
