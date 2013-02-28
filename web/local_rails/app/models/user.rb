@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
+  attr_accessible :email, :gcm
   has_many	:provide, 	:dependent => 	:destroy
   has_many 	:wifis, 	:through => 	:provide
-  # attr_accessible :title, :body
+  
   
   validates :gcm,			:presence 	=> true,
 							:uniqueness	=> true
