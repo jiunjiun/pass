@@ -17,12 +17,10 @@
 import webapp2
 from controllers.home 	import home
 from controllers.api 	import register
-from controllers.api 	import find
 from controllers.api 	import save
 
 app = webapp2.WSGIApplication([
     ('/', home),
 	('/api/register/', register),
-	('/api/find/', find),
 	('/api/save/', save),
 ], debug=True)
