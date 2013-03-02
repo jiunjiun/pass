@@ -34,7 +34,7 @@ public class BackgroundService extends Service {
 		haveBackgroundService = false;
 		
 		/***	Receiver	***/
-//		GCM_Receiver();
+		GCM_Receiver();
 		WiFi_Receiver();
 	}
 	

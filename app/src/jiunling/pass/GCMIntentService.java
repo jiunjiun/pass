@@ -38,6 +38,8 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onMessage(Context context, Intent intent) {
         String message = intent.getStringExtra(EXTRA_MESSAGE);
+        intent.toString();
+        if(D) Log.e(TAG, "-- intent tostring ----"+ intent.toString());
         if(D) Log.e(TAG, " -- message -- " + message);
     }
 
