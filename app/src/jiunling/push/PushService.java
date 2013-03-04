@@ -65,13 +65,13 @@ public class PushService {
 			mParams = mRegister.getParams();
 			break;
 		case RegisterWifi:
-//			RegisterWifi mRegisterWifi = new RegisterWifi(mParams, mParameter);
-//			mParams = mRegisterWifi.getParams();
+			RegisterWifi mRegisterWifi = new RegisterWifi(mContext, mParameter);
+			mParams = mRegisterWifi.getParams();
 			break;
 		}
 		
 		new PushServer(Kind, mParams, mHandler);
-		if(D)Log.e(TAG, "** PushServer ** ");
+		if(D) Log.e(TAG, "** PushServer ** ");
 	}
 	
 	/**		get Data	**/
@@ -79,10 +79,10 @@ public class PushService {
 	public Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			int Error = (int)msg.arg1;
-			int Kind = msg.what;
-			int Type = (int)msg.arg2;
-			String json_data = (String)msg.obj;
+//			int Error = (int)msg.arg1;
+//			int Kind = msg.what;
+//			int Type = (int)msg.arg2;
+//			String json_data = (String)msg.obj;
 			
 		}
 	};
