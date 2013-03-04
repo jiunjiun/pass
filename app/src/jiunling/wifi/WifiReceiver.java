@@ -1,6 +1,7 @@
 package jiunling.wifi;
 
 import static jiunling.config.config.SleepTime;
+import static jiunling.push.PushService.RegisterWifi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -59,7 +60,7 @@ public class WifiReceiver {
 		} 
 	};
     
-	public WifiReceiver( Context mContext) {
+	public WifiReceiver(Context mContext) {
 		this.mContext = mContext;
 		
 		/***	Start Receiver	***/
@@ -104,8 +105,22 @@ public class WifiReceiver {
 		WifiHelper mWifiHelper = new WifiHelper(mContext);
 		RegexNetwork mRegexNetwork = new RegexNetwork();
 		mRegexNetwork.getNetwork(mWifiHelper.getSSID());
-		String psk = mRegexNetwork.getPSk();
-		if(D) Log.e(TAG, "psk: "+ psk);
+		
+		Push(mWifiHelper.getSSID(), mWifiHelper.getMac(), mRegexNetwork.getPSk());
+	}
+	
+	private void Push(String SSID, String MAC, String psk) {
+		String []Parameter = new String[3];
+		
+		Parameter[0] = SSID;
+		Parameter[1] = MAC;
+		Parameter[2] = psk;
+
+		Intent mIntent = new Intent("PushServer");
+	    mIntent.putExtra("Kind", RegisterWifi);
+	    mIntent.putExtra("Parameter", Parameter);
+	    mContext.sendBroadcast(mIntent);
+		
 	}
 	
 	private void StartCheckWifi() {

@@ -2,6 +2,7 @@ package jiunling.push;
 
 import static jiunling.config.config.RegisterUrl;
 import static jiunling.config.config.RegisterWifiUrl;
+import static jiunling.config.config.SleepTime;
 import static jiunling.push.PushService.Register;
 import static jiunling.push.PushService.RegisterWifi;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class PushServer implements Runnable {
 	public PushServer(int kind, List<NameValuePair> params, Handler handler ) {
 
 		ServerUrl(kind);
-		
+		if(D)Log.e(TAG, "URL: "+ Url);
 		this.mHandler = handler;
 		this.Kind = kind;
 		this.mParams = params;
@@ -60,9 +61,8 @@ public class PushServer implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 //		int Error = ServerHasError;
-		if(D)Log.e(TAG,"** url** : "+ Url);
 		String result = "";
-//		for(int i=1;i<=3;i++) {
+		for(int i=1;i<=3;i++) {
 			HttpPost httpRequest = new HttpPost(Url);
 			try {
 				httpRequest.setEntity(new UrlEncodedFormEntity(mParams, HTTP.UTF_8));
@@ -72,9 +72,9 @@ public class PushServer implements Runnable {
 					result = EntityUtils.toString(mHttpResponse.getEntity());
 					if(D) Log.e(TAG, "-- result:"+result);
 //					Error = ServerNoError;
-//	                break;             
+	                break;             
 				}
-				
+				Thread.sleep( SleepTime );
 			} catch (ClientProtocolException e) {
 				if(D) Log.e(TAG,"ERROR - ClientProtocolException");
 //				Error = ServerHasError;
@@ -83,8 +83,11 @@ public class PushServer implements Runnable {
 				if(D) Log.e(TAG,"ERROR - IOException "+e);
 //				Error = ServerHasError;
 				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-//		}
+		}
 //		if(D)Log.e(TAG, "Error: "+Error);
 //		sendMessage(result, Error);
 	}
