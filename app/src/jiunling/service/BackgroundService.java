@@ -38,7 +38,7 @@ public class BackgroundService extends Service {
 		/***	Receiver	***/
 		PushService_Receiver();
 		GCM_Receiver();
-//		WiFi_Receiver();
+		WiFi_Receiver();
 	
 	}
 	
