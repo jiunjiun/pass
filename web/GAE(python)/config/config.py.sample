@@ -1,2 +1,4 @@
 #!/usr/bin/env python
 SERVER_URL = 'your_server_url'
+USER_URL 	= SERVER_URL + '/USER_URL/'
+WIFI_URL 	= SERVER_URL + '/WIFI_URL/'

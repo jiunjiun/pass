@@ -17,10 +17,10 @@
 import webapp2
 from controllers.home 	import home
 from controllers.api 	import register
-from controllers.api 	import save
+from controllers.api 	import wifi
 
 app = webapp2.WSGIApplication([
     ('/', home),
 	('/api/register/', register),
-	('/api/save/', save),
+	('/api/wifi/', wifi),
 ], debug=True)

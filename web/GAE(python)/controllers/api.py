@@ -34,39 +34,62 @@ class register(webapp2.RequestHandler):
 		from config import config
 		
 		sys.path.append('..')
-		SERVER_URL = config.SERVER_URL
-		
+		SERVER_URL = config.USER_URL
 		try:
 			reg 			= self.request.get('reg')
 			reg_arr			= json.loads(reg)
 			reg_arr['gps'] 	= json.loads(reg_arr['gps']) 
 
-			if len(reg_arr['email']) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", reg_arr['email']) and len(reg_arr['gcm']) > 0 and len(reg_arr['gps']) > 0 and len(reg_arr['gps']['lat']) > 0 and len(reg_arr['gps']['long']) > 0:
+			if len(reg_arr['email']) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", reg_arr['email']) and len(reg_arr['registrarId']) > 0 and len(reg_arr['gps']) > 0 and len(reg_arr['gps']['lat']) > 0 and len(reg_arr['gps']['long']) > 0:
 				form_data 	= 'reg=%s&k=reg' % (reg)
 				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
-				self.response.out.write(result.content)
-			else:
-				self.error(404)
+				
+				# if result.status_code == 200:
+					# self.response.out.write(result.content)
 		except Exception, e: 
 			self.error(404)
+		self.error(404)
 		
-class save(webapp2.RequestHandler):	
+class wifi(webapp2.RequestHandler):	
 	def get(self):
 		self.error(404)
 		
 	def post(self):
-		import sys  
+		import json, sys, re
 		from google.appengine.api import urlfetch
-		from django.utils import simplejson
 		from config import config
 
 		sys.path.append('..')
-		SERVER_URL = config.SERVER_URL
+		SERVER_URL = config.WIFI_URL
 		try:
-			reg	= simplejson.loads(self.request.get('reg'))			
-			form_data = 'test[email]=%s&test[gcm]=%s' % (reg['email'], reg['gcm'])
-			result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
-		except Exception: 
-			pass
-
+			wifi 			= self.request.get('wifi')
+			wifi_arr		= json.loads(wifi)
+			wifi_arr['gps'] = json.loads(wifi_arr['gps']) 
+			
+			
+			if len(wifi_arr['MAC']) > 0 and re.match(r"([a-fA-F0-9]{2}[:|\-]?){6}", wifi_arr['MAC']):
+				form_data = 'wifi=%s&k=save' % (wifi)
+				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
+				
+				# if result.status_code == 200:
+					# self.response.out.write(result.content)
+		except Exception, e: 
+			self.error(404)
+		self.error(404)
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
