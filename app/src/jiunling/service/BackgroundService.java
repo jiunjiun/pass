@@ -1,6 +1,7 @@
 package jiunling.service;
 
 import jiunling.gcm.GCM;
+import jiunling.push.PushService;
 import jiunling.wifi.WifiReceiver;
 import android.app.Service;
 import android.content.Intent;
@@ -16,6 +17,7 @@ public class BackgroundService extends Service {
 	
 	private GCM mGCM = null;
 	private WifiReceiver mWifiReceiver = null;
+	private PushService mPushService = null;
 	
 	
 	/***	Background config State		***/
@@ -34,8 +36,10 @@ public class BackgroundService extends Service {
 		haveBackgroundService = false;
 		
 		/***	Receiver	***/
+		PushService_Receiver();
 		GCM_Receiver();
-		WiFi_Receiver();
+//		WiFi_Receiver();
+	
 	}
 	
 	@Override
@@ -44,6 +48,10 @@ public class BackgroundService extends Service {
 		super.onDestroy();
 		if(D) Log.e(TAG, "onDestroy");
 		DisableReceiver();
+	}
+	
+	private void PushService_Receiver() {
+		if(mPushService == null) mPushService = new PushService(this);
 	}
 		
 	private void GCM_Receiver() {
