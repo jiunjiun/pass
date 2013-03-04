@@ -1,8 +1,10 @@
 package jiunling.gcm;
 
+import static jiunling.config.config.RegistrarId;
 import static jiunling.config.config.SENDER_ID;
-import static jiunling.config.config.UserRegistrarId;
+import static jiunling.push.PushService.Register;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gcm.GCMRegistrar;
@@ -30,8 +32,12 @@ public class GCM {
     		GCMRegistrar.register(mContext, SENDER_ID);
     	} else {
     		Log.e(TAG, "regId: "+regId);
-    		UserRegistrarId = regId;
+    		RegistrarId = regId;
     	}
+    	
+    	Intent mIntent = new Intent("PushServer");
+	    mIntent.putExtra("Kind", Register);
+	    mContext.sendBroadcast(mIntent);
 	}
 	
 	public void Unregister(){
