@@ -1,8 +1,8 @@
 package jiunling.pass;
 
+import static jiunling.config.config.havaRoot;
 import static jiunling.service.BackgroundService.haveBackgroundService;
 import jiunling.service.BackgroundService;
-import jiunling.wifi.RegexNetwork;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +20,7 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-//		if(!havaRoot) havaRoot = jiunling.root.SuperUser.getRootAhth();
+		if(!havaRoot) havaRoot = jiunling.root.SuperUser.getRootAhth();
 	}
 	
 	@Override
@@ -35,6 +35,7 @@ public class MainActivity extends SherlockActivity {
     public synchronized void onResume() {
         super.onResume();
         if(D) Log.e(TAG, "+++ ON Resume +++");
+
     }
     
     @Override
@@ -64,13 +65,4 @@ public class MainActivity extends SherlockActivity {
     	    startService(intent);
     	}
     }
-    
-    private void SuperUser() {
-    	RegexNetwork mRegexNetwork = new RegexNetwork();
-    	mRegexNetwork.getNetwork("jiunjiun");
-    	if(mRegexNetwork.getPSk() == null)
-    		Log.e(TAG, "public");
-    	else 
-    		Log.e(TAG, "private PSK: "+ mRegexNetwork.getPSk());
-	}
 }
