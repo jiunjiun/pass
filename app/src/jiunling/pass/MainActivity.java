@@ -1,6 +1,5 @@
 package jiunling.pass;
 
-import static jiunling.config.config.havaRoot;
 import static jiunling.service.BackgroundService.haveBackgroundService;
 import jiunling.service.BackgroundService;
 import jiunling.wifi.RegexNetwork;
@@ -21,7 +20,7 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		if(!havaRoot) havaRoot = jiunling.root.SuperUser.getRootAhth();
+//		if(!havaRoot) havaRoot = jiunling.root.SuperUser.getRootAhth();
 	}
 	
 	@Override
@@ -36,7 +35,6 @@ public class MainActivity extends SherlockActivity {
     public synchronized void onResume() {
         super.onResume();
         if(D) Log.e(TAG, "+++ ON Resume +++");
-        
     }
     
     @Override
