@@ -70,29 +70,11 @@ nosetests.xml
 *.sh
 # -------------------
 
-# -------------------
-# | 	Rails		|
-# -------------------
-
-# Ignore bundler config
-/.bundle
-
-# Ignore the default SQLite database.
-/db/*.sqlite3
-
-# Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp
-
-
-# -------------------
-
 
 # Config
 app/src/jiunling/config/config.java
 web/GAE(python)/config/config.py
 web/GAE(python)/app.yaml
-web/local_rails/config/database.yml
 
 # Statics
 statics/*
