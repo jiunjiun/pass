@@ -15,10 +15,9 @@ public class AGPS {
 	private Location mLocation = null;
 	
 	
-	public AGPS( Context mContext) {
+	public AGPS(Context mContext) {
 		this.mContext = mContext;
-		
-		LocationManager status = (LocationManager) (this.mContext.getSystemService(Context.LOCATION_SERVICE));
+		LocationManager status = (LocationManager) (mContext.getSystemService(Context.LOCATION_SERVICE));
 		try {
 			if ( status.isProviderEnabled(LocationManager.NETWORK_PROVIDER) || status.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 				//如果GPS或網路定位開啟，呼叫locationServiceInitial()更新位置
