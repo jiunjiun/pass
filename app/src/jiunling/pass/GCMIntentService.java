@@ -1,7 +1,9 @@
 package jiunling.pass;
 
 import static jiunling.config.config.EXTRA_MESSAGE;
+import static jiunling.config.config.RegistrarId;
 import static jiunling.config.config.SENDER_ID;
+import static jiunling.push.PushService.Register;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -21,6 +23,10 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onRegistered(Context context, String registrationId) {
         Log.e(TAG, "Device registered: regId = " + registrationId);
+        RegistrarId = registrationId;
+        Intent mIntent = new Intent("PushServer");
+	    mIntent.putExtra("Kind", Register);
+	    sendBroadcast(mIntent);
     }
 
     @Override
