@@ -21,7 +21,9 @@
     <!-- user accounts -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     
+    <!-- GPS, AGPS -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FIND_LOCATION"/>
     
     <uses-permission android:name="android.permission.WAKE_LOCK" />   
     
