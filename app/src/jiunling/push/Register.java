@@ -51,7 +51,7 @@ public class Register {
 		Parameter = new HashMap<String, String>();
 		Parameter.put("email", Email);
 		Parameter.put("gps", getGPS());
-		Parameter.put("gcm", RegistrarId);
+		Parameter.put("registrarId", RegistrarId);
 	}
 	
 	private String getGPS() {
