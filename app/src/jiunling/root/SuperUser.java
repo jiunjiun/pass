@@ -10,8 +10,8 @@ import java.io.PrintWriter;
 
 public class SuperUser {
 	//Debugging
-	private static final String TAG = "command";
-	private static final boolean D = true;
+//	private static final String TAG = "command";
+//	private static final boolean D = true;
 			
 	private String ShellResult;
 	
