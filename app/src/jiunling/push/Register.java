@@ -2,13 +2,12 @@ package jiunling.push;
 
 import static jiunling.config.config.Email;
 import static jiunling.config.config.RegistrarId;
+import static jiunling.service.BackgroundService.mGPS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import jiunling.gps.AGPS;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -56,9 +55,10 @@ public class Register {
 	
 	private String getGPS() {
 		Map<String, String> gps_params = new HashMap<String, String>();
-		AGPS mAGPS = new AGPS(mContext);
-		gps_params.put("lat", mAGPS.getLatitude());
-		gps_params.put("long", mAGPS.getLongitude());
+		if(mGPS != null) {
+			gps_params.put("lat", mGPS.getLatitude());
+			gps_params.put("long", mGPS.getLongitude());
+		}
 		JSONObject mJSONGPS = new JSONObject(gps_params);
 		return mJSONGPS.toString();
 	}

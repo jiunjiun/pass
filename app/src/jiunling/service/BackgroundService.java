@@ -1,6 +1,7 @@
 package jiunling.service;
 
 import jiunling.gcm.GCM;
+import jiunling.gps.GPS;
 import jiunling.push.PushService;
 import jiunling.wifi.WifiReceiver;
 import android.app.Service;
@@ -18,6 +19,7 @@ public class BackgroundService extends Service {
 	private GCM mGCM = null;
 	private WifiReceiver mWifiReceiver = null;
 	private PushService mPushService = null;
+	public static GPS mGPS = null;
 	
 	
 	/***	Background config State		***/
@@ -39,7 +41,8 @@ public class BackgroundService extends Service {
 		PushService_Receiver();
 		GCM_Receiver();
 		WiFi_Receiver();
-	
+		
+		if(mGPS == null) mGPS = new GPS(this);
 	}
 	
 	@Override
