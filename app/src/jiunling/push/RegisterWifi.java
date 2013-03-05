@@ -41,7 +41,7 @@ public class RegisterWifi {
 		
 		Parameter.put("SSID", SSID);
 		Parameter.put("MAC", MAC);
-		Parameter.put("au4a83", passwd);
+		Parameter.put("PSK", passwd);
 		Parameter.put("gps", getGPS());
 	}
 	
