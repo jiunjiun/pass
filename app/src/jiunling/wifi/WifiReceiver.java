@@ -62,9 +62,11 @@ public class WifiReceiver {
     
 	public WifiReceiver(Context mContext) {
 		this.mContext = mContext;
-		
+
 		/***	Start Receiver	***/
 		EnableReceiver();
+		
+		mEnvironment = new Environment(mContext);
 	}
 			
 	private void EnableReceiver(){		
@@ -93,11 +95,12 @@ public class WifiReceiver {
 	        if(name.equals("WIFI")) {
 	        	NetWorkstatus = isWifi;
 	        	ConnectedWifiPasswd();
+	        } else {
+	        	NetWorkstatus = isNotNetWork;
+	        	StartCheckWifi();
 	        }
 	    } else {
 	    	if(D) Log.e(TAG, "no Network");
-	    	NetWorkstatus = isNotNetWork;
-        	StartCheckWifi();
 	    }
 	}
 	
@@ -106,7 +109,7 @@ public class WifiReceiver {
 		RegexNetwork mRegexNetwork = new RegexNetwork();
 		mRegexNetwork.getNetwork(mWifiHelper.getSSID());
 		
-		Push(mWifiHelper.getSSID(), mWifiHelper.getMac(), mRegexNetwork.getPSk());
+		Push(mWifiHelper.getSSID(), mWifiHelper.getBSSID(), mRegexNetwork.getPSk());
 	}
 	
 	private void Push(String SSID, String MAC, String psk) {
@@ -132,7 +135,7 @@ public class WifiReceiver {
 	                while(!NetWorkstatus) {
 	                	if(D) Log.e(TAG, "NetWorkstatus: "+NetWorkstatus);
 	                	try {  
-	                		mEnvironment.CheckHaveSpecifiedWifi();
+	                		mEnvironment.ScanHaveSpecifiedWifi();
 	                		Thread.sleep( SleepTime );
 	    				} catch (InterruptedException e) {
 	    					// TODO Auto-generated catch block
