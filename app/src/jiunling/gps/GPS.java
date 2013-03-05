@@ -17,6 +17,8 @@ public class GPS implements LocationListener {
 	private String LOCATION_SERVICE = LocationManager.GPS_PROVIDER;
 //	private String LOCATION_SERVICE = LocationManager.NETWORK_PROVIDER;
 	
+	private final int AgainTime = 1000 * 60 * 10;
+	
 	@Override
 	public void onLocationChanged(Location mLocation) {
 		// TODO Auto-generated method stub
@@ -45,7 +47,7 @@ public class GPS implements LocationListener {
 			if (status.isProviderEnabled(LocationManager.GPS_PROVIDER) || status.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 				mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);			//取得系統定位服務
 				mLocation = mLocationManager.getLastKnownLocation(LOCATION_SERVICE);								//使用GPS定位座標
-				mLocationManager.requestLocationUpdates(LOCATION_SERVICE, 1000*60*10, 5, this);
+				mLocationManager.requestLocationUpdates(LOCATION_SERVICE, AgainTime, 5, this);
 			} 
 		} catch (Exception e) {
 		}
