@@ -26,7 +26,7 @@ public class PushServer implements Runnable {
 	
 	/***	Debugging	***/
 	private static final String TAG = "RequestServer";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	private String Url;
 	
@@ -72,7 +72,7 @@ public class PushServer implements Runnable {
 					result = EntityUtils.toString(mHttpResponse.getEntity());
 					if(D) Log.e(TAG, "-- result:"+result);
 //					Error = ServerNoError;
-	                break;             
+					break;
 				}
 				Thread.sleep( SleepTime );
 			} catch (ClientProtocolException e) {
