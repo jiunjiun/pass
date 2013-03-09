@@ -45,7 +45,8 @@ class register(webapp2.RequestHandler):
 				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 				
 				# if result.status_code == 200:
-					# self.response.out.write(result.content)
+				# self.response.out.write(SERVER_URL)
+				# self.response.out.write(result.content)
 		except Exception, e: 
 			self.error(404)
 		self.error(404)
