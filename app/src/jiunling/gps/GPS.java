@@ -46,7 +46,7 @@ public class GPS implements LocationListener {
 		try {
 			if (status.isProviderEnabled(LocationManager.GPS_PROVIDER) || status.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 				mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);			//取得系統定位服務
-				mLocation = mLocationManager.getLastKnownLocation(LOCATION_SERVICE);								//使用GPS定位座標
+				mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);				//使用GPS定位座標
 				mLocationManager.requestLocationUpdates(LOCATION_SERVICE, AgainTime, 5, this);
 			} 
 		} catch (Exception e) {
