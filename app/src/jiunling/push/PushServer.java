@@ -2,9 +2,12 @@ package jiunling.push;
 
 import static jiunling.config.config.RegisterUrl;
 import static jiunling.config.config.RegisterWifiUrl;
+import static jiunling.config.config.RenewWifiUrl;
 import static jiunling.config.config.SleepTime;
 import static jiunling.push.PushService.Register;
 import static jiunling.push.PushService.RegisterWifi;
+import static jiunling.push.PushService.Renew;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -26,7 +29,7 @@ public class PushServer implements Runnable {
 	
 	/***	Debugging	***/
 	private static final String TAG = "RequestServer";
-	private static final boolean D = false;
+	private static final boolean D = true;
 	
 	private String Url;
 	
@@ -53,6 +56,9 @@ public class PushServer implements Runnable {
 			break;
 		case RegisterWifi:
 			Url = RegisterWifiUrl;
+			break;
+		case Renew:
+			Url = RenewWifiUrl;
 			break;
 		}
 	}

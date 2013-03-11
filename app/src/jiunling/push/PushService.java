@@ -21,8 +21,9 @@ public class PushService {
 	
 	private Context mContext;
 	
-	public static final int Register = 1;
-	public static final int RegisterWifi = 2;
+	public static final int Register 		= 1;
+	public static final int RegisterWifi 	= 2;
+	public static final int Renew 			= 3;
 	
 	public BroadcastReceiver mRequestServerReceiver = new BroadcastReceiver() {
 		@Override
@@ -67,6 +68,11 @@ public class PushService {
 		case RegisterWifi:
 			RegisterWifi mRegisterWifi = new RegisterWifi(mContext, mParameter);
 			mParams = mRegisterWifi.getParams();
+			break;
+			
+		case Renew:
+			RenewWifi mRenewWifi = new RenewWifi(mContext);
+			mParams = mRenewWifi.getParams();
 			break;
 		}
 		
