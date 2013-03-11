@@ -18,9 +18,11 @@ import webapp2
 from controllers.home 	import home
 from controllers.api 	import register
 from controllers.api 	import wifi
+from controllers.api 	import renew
 
 app = webapp2.WSGIApplication([
     ('/', home),
 	('/api/register/', register),
 	('/api/wifi/', wifi),
+	('/api/renew/', renew),
 ], debug=True)

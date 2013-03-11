@@ -49,7 +49,7 @@ class register(webapp2.RequestHandler):
 				# self.response.out.write(result.content)
 		except Exception, e: 
 			self.error(404)
-		self.error(404)
+
 		
 class wifi(webapp2.RequestHandler):	
 	def get(self):
@@ -76,14 +76,32 @@ class wifi(webapp2.RequestHandler):
 					# self.response.out.write(result.content)
 		except Exception, e: 
 			self.error(404)
+		
+
+class renew(webapp2.RequestHandler):	
+	def get(self):
 		self.error(404)
 		
-		
-		
-		
-		
-		
-		
+	def post(self):
+		import json, sys, re
+		from google.appengine.api import urlfetch
+		from config import config
+
+		sys.path.append('..')
+		SERVER_URL = config.WIFI_URL
+		try:
+			user 			= self.request.get('user')
+			user_arr		= json.loads(user)
+			
+			if len(user_arr['email']) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", user_arr['email']):
+				form_data = 'user=%s&k=renew' % (user)
+				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
+				
+				# if result.status_code == 200:
+				# self.response.out.write(result.content)
+		except Exception, e: 
+			# self.response.out.write(str(e))
+			self.error(404)		
 		
 		
 		
