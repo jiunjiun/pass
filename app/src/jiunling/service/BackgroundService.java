@@ -2,6 +2,7 @@ package jiunling.service;
 
 import jiunling.gcm.GCM;
 import jiunling.gps.GPS;
+import jiunling.pull.PullService;
 import jiunling.push.PushService;
 import jiunling.wifi.WifiReceiver;
 import android.app.Service;
@@ -18,6 +19,7 @@ public class BackgroundService extends Service {
 	
 	private GCM mGCM = null;
 	private WifiReceiver mWifiReceiver = null;
+	private PullService mPullService = null;
 	private PushService mPushService = null;
 	public static GPS mGPS = null;
 	
@@ -35,14 +37,15 @@ public class BackgroundService extends Service {
 	public void onStart(Intent intent, int startId) {
 		if(D) Log.e(TAG, "onStart");
 		
+		if(mGPS == null) mGPS = new GPS(this);
+		
 		haveBackgroundService = false;
 		
 		/***	Receiver	***/
+		PullService_Receiver();
 		PushService_Receiver();
 		GCM_Receiver();
 		WiFi_Receiver();
-		
-		if(mGPS == null) mGPS = new GPS(this);
 	}
 	
 	@Override
@@ -51,6 +54,10 @@ public class BackgroundService extends Service {
 		super.onDestroy();
 		if(D) Log.e(TAG, "onDestroy");
 		DisableReceiver();
+	}
+	
+	private void PullService_Receiver() {
+		if(mPullService == null) mPullService = new PullService(this);
 	}
 	
 	private void PushService_Receiver() {
