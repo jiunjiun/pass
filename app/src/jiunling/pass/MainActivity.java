@@ -1,6 +1,7 @@
 package jiunling.pass;
 
 import static jiunling.config.config.havaRoot;
+import static jiunling.push.PushService.Renew;
 import static jiunling.service.BackgroundService.haveBackgroundService;
 import jiunling.service.BackgroundService;
 import android.content.Intent;
@@ -13,7 +14,7 @@ public class MainActivity extends SherlockActivity {
 	
 	/***	Debugging	***/
 	private static final String TAG = "MainActivity";
-	private static final boolean D = false;
+	private static final boolean D = true;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +36,13 @@ public class MainActivity extends SherlockActivity {
     public synchronized void onResume() {
         super.onResume();
         if(D) Log.e(TAG, "+++ ON Resume +++");
-
+		
     }
     
     @Override
     public synchronized void onPause() {
     	super.onPause();
         if(D) Log.e(TAG, "- ON Pause -"); 
-
     }
  
     @Override
