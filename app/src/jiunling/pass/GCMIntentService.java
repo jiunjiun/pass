@@ -1,6 +1,7 @@
 package jiunling.pass;
 
-import static jiunling.config.config.EXTRA_MESSAGE;
+import static jiunling.config.config.GCM_KIND;
+import static jiunling.config.config.GCM_MESSAGE;
 import static jiunling.config.config.RegistrarId;
 import static jiunling.config.config.SENDER_ID;
 import static jiunling.push.PushService.Register;
@@ -22,7 +23,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onRegistered(Context context, String registrationId) {
-        Log.e(TAG, "Device registered: regId = " + registrationId);
+    	if(D) Log.e(TAG, "Device registered: regId = " + registrationId);
         RegistrarId = registrationId;
         Intent mIntent = new Intent("PushServer");
 	    mIntent.putExtra("Kind", Register);
@@ -31,37 +32,41 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onUnregistered(Context context, String registrationId) {
-        Log.i(TAG, "Device unregistered");
+        if(D) Log.i(TAG, "Device unregistered");
         if (GCMRegistrar.isRegisteredOnServer(context)) {
 
         } else {
             // This callback results from the call to unregister made on
             // ServerUtilities when the registration to the server failed.
-            Log.i(TAG, "Ignoring unregister callback");
+        	if(D) Log.i(TAG, "Ignoring unregister callback");
         }
     }
 
     @Override
     protected void onMessage(Context context, Intent intent) {
-        String message = intent.getStringExtra(EXTRA_MESSAGE);
-        intent.toString();
-        if(D) Log.e(TAG, "-- intent tostring ----"+ intent.toString());
-        if(D) Log.e(TAG, " -- message -- " + message);
+    	int Kind 		= Integer.parseInt(intent.getStringExtra(GCM_KIND));
+        String Message 	= intent.getStringExtra(GCM_MESSAGE);
+        
+        Intent mIntent = new Intent("PullService");
+        mIntent.putExtra(GCM_KIND, Kind);
+        mIntent.putExtra(GCM_MESSAGE, Message);
+	    sendBroadcast(mIntent);
+        
     }
 
     @Override
     protected void onDeletedMessages(Context context, int total) {
-        Log.i(TAG, "Received deleted messages notification");
+    	if(D) Log.i(TAG, "Received deleted messages notification");
     }
 
     @Override
     public void onError(Context context, String errorId) {
-        Log.i(TAG, "Received error: " + errorId);
+    	if(D) Log.i(TAG, "Received error: " + errorId);
     }
 
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
-        Log.i(TAG, "Received recoverable error: " + errorId);
+    	if(D) Log.i(TAG, "Received recoverable error: " + errorId);
         return super.onRecoverableError(context, errorId);
     }
 }
