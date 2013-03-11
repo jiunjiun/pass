@@ -30,9 +30,9 @@ public class WifiHelper {
     private WifiLock wifiLock;// Wifi鎖
     
     //wifiConnect status
-    public static final byte WifiCipher_NOPASSWD = 1;
-	public static final byte WifiCipher_WEP = 2;
-	public static final byte WifiCipher_WPA = 3;
+    public static final byte WifiCipher_NOPASSWD 	= 1;
+	public static final byte WifiCipher_WEP 		= 2;
+	public static final byte WifiCipher_WPA 		= 3;
 
     public WifiHelper(Context context) {
         this.wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);// 獲取Wifi服務
@@ -332,14 +332,14 @@ public class WifiHelper {
 		case WifiCipher_WPA:
 			/*** wifi is WPA ***/
 			wc.preSharedKey = "\""+ PASSWD +"\"";
-			wc.hiddenSSID = true;
+			wc.hiddenSSID 	= true;
+			wc.status 		= WifiConfiguration.Status.ENABLED; 
+			wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
 			wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
 			wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-			wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
 			wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
 			wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-			wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-			wc.status = WifiConfiguration.Status.ENABLED; 
+//			wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
 			break;
 	
 		}
