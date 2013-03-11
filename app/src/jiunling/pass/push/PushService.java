@@ -1,4 +1,4 @@
-package jiunling.push;
+package jiunling.pass.push;
 
 import java.util.ArrayList;
 import java.util.List;

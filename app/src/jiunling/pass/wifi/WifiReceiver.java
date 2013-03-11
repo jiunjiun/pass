@@ -1,7 +1,7 @@
-package jiunling.wifi;
+package jiunling.pass.wifi;
 
-import static jiunling.config.config.SleepTime;
-import static jiunling.push.PushService.RegisterWifi;
+import static jiunling.pass.config.config.SleepTime;
+import static jiunling.pass.push.PushService.RegisterWifi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

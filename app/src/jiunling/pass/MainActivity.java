@@ -1,14 +1,17 @@
 package jiunling.pass;
 
-import static jiunling.config.config.havaRoot;
-import static jiunling.push.PushService.Renew;
-import static jiunling.service.BackgroundService.haveBackgroundService;
-import jiunling.service.BackgroundService;
+import static jiunling.pass.config.config.havaRoot;
+import static jiunling.pass.service.BackgroundService.haveBackgroundService;
+import jiunling.pass.service.BackgroundService;
+import jiunling.pass.view.option;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class MainActivity extends SherlockActivity {
 	
@@ -21,7 +24,7 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		if(!havaRoot) havaRoot = jiunling.root.SuperUser.getRootAhth();
+		if(!havaRoot) havaRoot = jiunling.pass.root.SuperUser.getRootAhth();
 	}
 	
 	@Override
@@ -56,6 +59,23 @@ public class MainActivity extends SherlockActivity {
     public void onDestroy() {
     	super.onDestroy();
         if(D) Log.e(TAG, "--- ON Destroy ---");
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    	case R.id.menu_settings:
+    		startActivity(new Intent().setClass(this , option.class));
+    		break;
+    	}
+        return false;
     }
     
     private void init() {		

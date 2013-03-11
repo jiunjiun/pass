@@ -1,4 +1,4 @@
-package jiunling.gps;
+package jiunling.pass.gps;
 
 import android.content.Context;
 import android.location.Location;

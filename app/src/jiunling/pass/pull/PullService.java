@@ -1,7 +1,7 @@
-package jiunling.pull;
+package jiunling.pass.pull;
 
-import static jiunling.config.config.GCM_KIND;
-import static jiunling.config.config.GCM_MESSAGE;
+import static jiunling.pass.config.config.GCM_KIND;
+import static jiunling.pass.config.config.GCM_MESSAGE;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

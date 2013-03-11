@@ -1,6 +1,6 @@
-package jiunling.gcm;
+package jiunling.pass.gcm;
 
-import static jiunling.config.config.SENDER_ID;
+import static jiunling.pass.config.config.SENDER_ID;
 import android.content.Context;
 import android.util.Log;
 

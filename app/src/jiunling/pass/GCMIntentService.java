@@ -1,10 +1,10 @@
 package jiunling.pass;
 
-import static jiunling.config.config.GCM_KIND;
-import static jiunling.config.config.GCM_MESSAGE;
-import static jiunling.config.config.RegistrarId;
-import static jiunling.config.config.SENDER_ID;
-import static jiunling.push.PushService.Register;
+import static jiunling.pass.config.config.GCM_KIND;
+import static jiunling.pass.config.config.GCM_MESSAGE;
+import static jiunling.pass.config.config.RegistrarId;
+import static jiunling.pass.config.config.SENDER_ID;
+import static jiunling.pass.push.PushService.Register;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;

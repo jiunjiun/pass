@@ -1,6 +1,6 @@
-package jiunling.wifi;
+package jiunling.pass.wifi;
 
-import jiunling.SQLite.WiFiDb;
+import jiunling.pass.SQLite.WiFiDb;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.wifi.ScanResult;

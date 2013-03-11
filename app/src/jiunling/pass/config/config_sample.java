@@ -1,4 +1,4 @@
-package jiunling.config;
+package jiunling.pass.config;
 
 public class config_sample {
 

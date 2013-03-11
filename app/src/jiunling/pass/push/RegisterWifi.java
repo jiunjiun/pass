@@ -1,6 +1,6 @@
-package jiunling.push;
+package jiunling.pass.push;
 
-import static jiunling.service.BackgroundService.mGPS;
+import static jiunling.pass.service.BackgroundService.mGPS;
 
 import java.util.ArrayList;
 import java.util.HashMap;

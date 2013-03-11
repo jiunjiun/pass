@@ -1,9 +1,9 @@
-package jiunling.wifi;
+package jiunling.pass.wifi;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jiunling.root.SuperUser;
+import jiunling.pass.root.SuperUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;

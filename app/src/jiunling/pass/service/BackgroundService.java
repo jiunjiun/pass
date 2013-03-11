@@ -1,10 +1,10 @@
-package jiunling.service;
+package jiunling.pass.service;
 
-import jiunling.gcm.GCM;
-import jiunling.gps.GPS;
-import jiunling.pull.PullService;
-import jiunling.push.PushService;
-import jiunling.wifi.WifiReceiver;
+import jiunling.pass.gcm.GCM;
+import jiunling.pass.gps.GPS;
+import jiunling.pass.pull.PullService;
+import jiunling.pass.push.PushService;
+import jiunling.pass.wifi.WifiReceiver;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;

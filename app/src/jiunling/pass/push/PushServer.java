@@ -1,12 +1,12 @@
-package jiunling.push;
+package jiunling.pass.push;
 
-import static jiunling.config.config.RegisterUrl;
-import static jiunling.config.config.RegisterWifiUrl;
-import static jiunling.config.config.RenewWifiUrl;
-import static jiunling.config.config.SleepTime;
-import static jiunling.push.PushService.Register;
-import static jiunling.push.PushService.RegisterWifi;
-import static jiunling.push.PushService.Renew;
+import static jiunling.pass.config.config.RegisterUrl;
+import static jiunling.pass.config.config.RegisterWifiUrl;
+import static jiunling.pass.config.config.RenewWifiUrl;
+import static jiunling.pass.config.config.SleepTime;
+import static jiunling.pass.push.PushService.Register;
+import static jiunling.pass.push.PushService.RegisterWifi;
+import static jiunling.pass.push.PushService.Renew;
 
 import java.io.IOException;
 import java.util.List;

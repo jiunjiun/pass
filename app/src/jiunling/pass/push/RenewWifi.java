@@ -1,6 +1,6 @@
-package jiunling.push;
+package jiunling.pass.push;
 
-import static jiunling.config.config.Email;
+import static jiunling.pass.config.config.Email;
 
 import java.util.ArrayList;
 import java.util.HashMap;

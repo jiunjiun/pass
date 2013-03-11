@@ -1,4 +1,4 @@
-package jiunling.wifi;
+package jiunling.pass.wifi;
 
 /*參考：http://www.cnblogs.com/fly_binbin/archive/2010/12/21/1913230.html*/
 

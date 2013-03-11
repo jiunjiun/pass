@@ -3,6 +3,8 @@
 
     <string name="app_name">pass</string>
     <string name="hello_world">Hello world!</string>
+    
     <string name="menu_settings">Settings</string>
-
+    
+    <string name="option">option</string>
 </resources>
