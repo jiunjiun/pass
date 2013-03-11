@@ -69,7 +69,7 @@ public class WifiReceiver {
 		mEnvironment = new Environment(mContext);
 	}
 			
-	private void EnableReceiver(){		
+	private void EnableReceiver() {		
 		if(D) Log.e(TAG, "-- EnableReceiver --");
 		
 		/***	∫ ≈•		***/
@@ -78,7 +78,6 @@ public class WifiReceiver {
     	mIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);	/*** 	(WIFI/3G) connect		***/
     	
     	mContext.registerReceiver(mWifiReceiver, mIntentFilter); 
-        
 	}
 
 	public void DisableReceiver() {
