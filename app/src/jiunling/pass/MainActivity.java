@@ -1,6 +1,5 @@
 package jiunling.pass;
 
-import static jiunling.pass.config.config.havaRoot;
 import static jiunling.pass.service.BackgroundService.haveBackgroundService;
 import jiunling.pass.service.BackgroundService;
 import jiunling.pass.view.option;
@@ -24,7 +23,7 @@ public class MainActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		if(!havaRoot) havaRoot = jiunling.pass.root.SuperUser.getRootAhth();
+//		if(!havaRoot) havaRoot = jiunling.pass.root.SuperUser.getRootAhth();
 	}
 	
 	@Override
@@ -32,7 +31,7 @@ public class MainActivity extends SherlockActivity {
         super.onStart();
         if(D) Log.e(TAG, "+++ ON Start +++");
         
-        init();
+//        init();
     }
     
     @Override
