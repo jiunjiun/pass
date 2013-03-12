@@ -2,60 +2,50 @@ package jiunling.pass.view;
 
 import jiunling.pass.R;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.util.Log;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class option extends SherlockActivity {
+public class option extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 	
 	/***	Debugging	***/
 	private static final String TAG = "MainActivity";
 	private static final boolean D = true;
 	
+	
+	String wifi_auto_scan_key, wifi_notification_user_key, wifi_update_interval_key;
+	CheckBoxPreference wifi_auto_scan, wifi_notification_user;
+	ListPreference wifi_update_intervalValues; 
+	
 	@Override
+	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.option);
+		addPreferencesFromResource(R.xml.setting);
 		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		wifi_auto_scan_key			= getResources().getString(R.string.wifi_auto_scan_key);
+		wifi_notification_user_key	= getResources().getString(R.string.wifi_notification_user_key);
+		wifi_update_interval_key	= getResources().getString(R.string.wifi_update_interval_key);
+		
+		wifi_auto_scan 				= (CheckBoxPreference) findPreference(wifi_auto_scan_key);
+		wifi_notification_user 		= (CheckBoxPreference) findPreference(wifi_notification_user_key);
+		wifi_update_intervalValues 	= (ListPreference) findPreference(wifi_update_interval_key);
+		
+		wifi_update_intervalValues.setValueIndex(3);
+		
+		wifi_auto_scan.setOnPreferenceChangeListener(this);
+		wifi_notification_user.setOnPreferenceChangeListener(this);
+		wifi_update_intervalValues.setOnPreferenceChangeListener(this);
 	}
 	
 	@Override
-    public void onStart() {
-        super.onStart();
-        if(D) Log.e(TAG, "+++ ON Start +++");
-        
-        init();
-    }
-    
-    @Override
-    public synchronized void onResume() {
-        super.onResume();
-        if(D) Log.e(TAG, "+++ ON Resume +++");
-		
-    }
-    
-    @Override
-    public synchronized void onPause() {
-    	super.onPause();
-        if(D) Log.e(TAG, "- ON Pause -"); 
-    }
- 
-    @Override
-    public void onStop() {
-    	super.onStop();
-        if(D) Log.e(TAG, "-- ON Stop --");
-        
-    }
-
-    @Override
-    public void onDestroy() {
-    	super.onDestroy();
-        if(D) Log.e(TAG, "--- ON Destroy ---");
-    }
-    
-    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 		    case android.R.id.home:
@@ -65,8 +55,28 @@ public class option extends SherlockActivity {
 		        return super.onOptionsItemSelected(item);
 	    }
 	}
-    
-    private void init() {		
-    	
-    }
+
+	@Override
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		// TODO Auto-generated method stub
+		if(D) Log.e(TAG, "Change preference.key: "+preference.getKey().toString());
+		if(D) Log.e(TAG, "Change preference.key: "+newValue.toString());
+		
+		if(preference.getKey().equals(wifi_auto_scan_key)) {
+			if((Boolean)newValue) {
+				preference.setSummary(getResources().getString(R.string.wifi_auto_scan_enable));
+			} else {
+				preference.setSummary(getResources().getString(R.string.wifi_auto_scan_disable));
+			}
+		} else if(preference.getKey().equals(wifi_notification_user_key)) {
+			if((Boolean)newValue) {
+				preference.setSummary(getResources().getString(R.string.wifi_notification_user_enable));
+			} else {
+				preference.setSummary(getResources().getString(R.string.wifi_notification_user_disable));
+			}
+		} else if(preference.getKey().equals(wifi_update_interval_key)) {
+			
+		}
+		return true;
+	}
 }

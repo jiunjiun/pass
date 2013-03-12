@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/wifi_setting" >
+        <CheckBoxPreference
+            android:key="@string/wifi_auto_scan_key"
+            android:defaultValue="true"
+            android:title="@string/wifi_auto_scan"
+            android:summary="@string/wifi_auto_scan_enable" />
+ 		
+        <CheckBoxPreference
+            android:key="@string/wifi_notification_user_key"
+            android:dependency="wifi_auto_scan"
+            android:defaultValue="false"
+            android:title="@string/wifi_notification_user" 
+            android:summary="@string/wifi_notification_user_disable" />
+
+        <ListPreference
+            android:key="@string/wifi_update_interval_key"
+            android:dependency="wifi_auto_scan"
+            android:entries="@array/wifi_update_interval"
+            android:entryValues="@array/wifi_update_intervalValues"
+            android:title="@string/wifi_update_interval" 
+            android:summary="@string/wifi_update_interval_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

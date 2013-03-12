@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="wifi_update_interval">
+        <item name="10">10 seconds</item>
+        <item name="30">30 seconds</item>
+        <item name="60">1 mins</item>
+        <item name="300">5 mins</item>
+    </string-array>
+    <string-array name="wifi_update_intervalValues">
+        <item name="10">10</item>
+        <item name="30">30</item>
+        <item name="60">60</item>
+        <item name="300">300</item>
+    </string-array>
+</resources>
