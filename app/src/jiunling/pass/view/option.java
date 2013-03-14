@@ -1,9 +1,11 @@
 package jiunling.pass.view;
 
-import static jiunling.pass.config.option.WifiScan;
 import static jiunling.pass.config.option.NotificationUser;
 import static jiunling.pass.config.option.UpdateTime;
+import static jiunling.pass.config.option.WifiScan;
+import static jiunling.pass.wifi.WifiReceiver.StartCheckWifi;
 import jiunling.pass.R;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -79,7 +81,8 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 				preference.setSummary(getResources().getString(R.string.wifi_notification_user_disable));
 			}
 		} else if(preference.getKey().equals(wifi_update_interval_key)) {
-			UpdateTime = (Integer) newValue;
+			UpdateTime = Integer.parseInt((String) newValue);
+		    sendBroadcast(new Intent(StartCheckWifi));
 		}
 		return true;
 	}
