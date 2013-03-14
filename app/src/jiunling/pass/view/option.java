@@ -1,5 +1,8 @@
 package jiunling.pass.view;
 
+import static jiunling.pass.config.option.WifiScan;
+import static jiunling.pass.config.option.NotificationUser;
+import static jiunling.pass.config.option.UpdateTime;
 import jiunling.pass.R;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -38,8 +41,6 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 		wifi_notification_user 		= (CheckBoxPreference) findPreference(wifi_notification_user_key);
 		wifi_update_intervalValues 	= (ListPreference) findPreference(wifi_update_interval_key);
 		
-		wifi_update_intervalValues.setValueIndex(3);
-		
 		wifi_auto_scan.setOnPreferenceChangeListener(this);
 		wifi_notification_user.setOnPreferenceChangeListener(this);
 		wifi_update_intervalValues.setOnPreferenceChangeListener(this);
@@ -63,19 +64,22 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 		if(D) Log.e(TAG, "Change preference.key: "+newValue.toString());
 		
 		if(preference.getKey().equals(wifi_auto_scan_key)) {
-			if((Boolean)newValue) {
+			WifiScan = (Boolean)newValue;
+			if(WifiScan) {
 				preference.setSummary(getResources().getString(R.string.wifi_auto_scan_enable));
 			} else {
 				preference.setSummary(getResources().getString(R.string.wifi_auto_scan_disable));
 			}
+			
 		} else if(preference.getKey().equals(wifi_notification_user_key)) {
-			if((Boolean)newValue) {
+			NotificationUser = (Boolean)newValue;
+			if(NotificationUser) {
 				preference.setSummary(getResources().getString(R.string.wifi_notification_user_enable));
 			} else {
 				preference.setSummary(getResources().getString(R.string.wifi_notification_user_disable));
 			}
 		} else if(preference.getKey().equals(wifi_update_interval_key)) {
-			
+			UpdateTime = (Integer) newValue;
 		}
 		return true;
 	}
