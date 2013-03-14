@@ -1,6 +1,7 @@
 package jiunling.pass.wifi;
 
 import static jiunling.pass.config.option.SleepTime;
+import static jiunling.pass.config.option.pubSleepTime;
 import static jiunling.pass.config.option.WifiScan;
 import static jiunling.pass.push.PushService.RegisterWifi;
 import android.content.BroadcastReceiver;
@@ -20,7 +21,8 @@ public class WifiReceiver {
 	
 	private Context mContext;
 	
-	private Environment mEnvironment;				
+	private Environment mEnvironment;	
+	private ScanPublicWifi mScanPublicWifi;
 	
 	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定NetWordstatus	**/
 	private boolean isWifi = true;
@@ -56,6 +58,8 @@ public class WifiReceiver {
 		        	if(D) Log.e(TAG, "-- WIFI_STATE_ENABLED --"); 
 		        	NetWorkstatus = isNotNetWork;
 		        	StartCheckWifi();
+		        	
+		        	FindPublicWifi();
 		        	break; 
 		        case WifiManager.WIFI_STATE_UNKNOWN: 
 		        	if(D) Log.e(TAG, "WIFI_STATE_UNKNOWN"); 
@@ -75,7 +79,8 @@ public class WifiReceiver {
 		/***	Start Receiver	***/
 		EnableReceiver();
 		
-		mEnvironment = new Environment(mContext);
+		mEnvironment 	= new Environment(mContext);
+		mScanPublicWifi = new ScanPublicWifi(mContext);
 	}
 			
 	private void EnableReceiver() {		
@@ -154,5 +159,23 @@ public class WifiReceiver {
 	            }  
 	        }.start();
 		}
+	}
+	
+	private synchronized void FindPublicWifi() {
+		new Thread() {  
+            @Override  
+            public void run() {  
+                super.run();  
+                while(wifi_state == WifiManager.WIFI_STATE_ENABLED) {
+                	try {  
+                		mScanPublicWifi.Scan();
+                		Thread.sleep( pubSleepTime );
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+                }
+            }  
+        }.start();
 	}
 }
