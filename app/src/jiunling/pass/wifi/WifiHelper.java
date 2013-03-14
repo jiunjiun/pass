@@ -213,6 +213,10 @@ public class WifiHelper {
     }
 
     // -----不知道怎麼用......
+    public Boolean saveConfiguration() {
+    	return wifiManager.saveConfiguration();
+    }
+    
     /** 添加一個連接 */
     public Boolean addNetWordLink(WifiConfiguration config) {
         int NetId = wifiManager.addNetwork(config);
