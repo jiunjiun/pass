@@ -58,7 +58,7 @@ public class RegexNetwork {
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+//				e.printStackTrace();
 				verify = false;
 			}
         }
