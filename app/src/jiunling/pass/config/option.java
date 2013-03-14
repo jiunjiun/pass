@@ -16,4 +16,9 @@ public class option {
 	public static int SleepTime							= UpdateTime * Second;
 	
 	
+	/**				hide			**/
+	/**		Wifi public(hide get)	**/
+	public static int pubUpdateTime 						= 60;
+	public static int pubSleepTime							= pubUpdateTime * Second;
+	
 }
