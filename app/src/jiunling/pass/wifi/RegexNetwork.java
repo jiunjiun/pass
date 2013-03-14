@@ -15,9 +15,11 @@ public class RegexNetwork {
 	
 	private static final String GetNetWorkShell = "cat /data/misc/wifi/wpa_supplicant.conf;";
 	
-	private SuperUser mSuperUser = null;
+	private SuperUser mSuperUser 	= null;
 	
-	private String psk = null;
+	private String psk 				= null;
+	
+	private boolean verify 			= true;
 	
 	public RegexNetwork() {
 		if( mSuperUser == null) mSuperUser = new SuperUser();
@@ -57,9 +59,14 @@ public class RegexNetwork {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				verify = false;
 			}
         }
 		return null;
+	}
+	
+	public boolean verify() {
+		return verify;
 	}
 	
 	public String getPSk() {
