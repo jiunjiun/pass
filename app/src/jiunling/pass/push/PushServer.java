@@ -3,7 +3,7 @@ package jiunling.pass.push;
 import static jiunling.pass.config.config.RegisterUrl;
 import static jiunling.pass.config.config.RegisterWifiUrl;
 import static jiunling.pass.config.config.RenewWifiUrl;
-import static jiunling.pass.config.config.SleepTime;
+import static jiunling.pass.config.option.SleepTime;
 import static jiunling.pass.push.PushService.Register;
 import static jiunling.pass.push.PushService.RegisterWifi;
 import static jiunling.pass.push.PushService.Renew;
