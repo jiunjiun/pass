@@ -1,6 +1,7 @@
 package jiunling.pass.wifi;
 
 import static jiunling.pass.config.option.SleepTime;
+import static jiunling.pass.config.option.WifiScan;
 import static jiunling.pass.push.PushService.RegisterWifi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,7 +19,9 @@ public class WifiReceiver {
 	private static final boolean D = true;
 	
 	private Context mContext;
-					
+	
+	private Environment mEnvironment;				
+	
 	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定NetWordstatus	**/
 	private boolean isWifi = true;
 	private boolean isNotNetWork = false;
@@ -26,7 +29,7 @@ public class WifiReceiver {
 	
 	private int wifi_state = -1;
 	
-	private Environment mEnvironment;
+	public static final String StartCheckWifi = "StartCheckWifi";
 		
 	public BroadcastReceiver mWifiReceiver = new BroadcastReceiver() {
 		@Override
@@ -51,11 +54,17 @@ public class WifiReceiver {
 		        	break; 
 		        case WifiManager.WIFI_STATE_ENABLED: 
 		        	if(D) Log.e(TAG, "-- WIFI_STATE_ENABLED --"); 
+		        	NetWorkstatus = isNotNetWork;
+		        	StartCheckWifi();
 		        	break; 
 		        case WifiManager.WIFI_STATE_UNKNOWN: 
 		        	if(D) Log.e(TAG, "WIFI_STATE_UNKNOWN"); 
 		        	break; 
 		        } 
+			}  else if (action.equals(StartCheckWifi)) {
+				if(D) Log.e(TAG, "StartCheckWifi Start"); 
+				NetWorkstatus = isNotNetWork;
+	        	StartCheckWifi();
 			}
 		} 
 	};
@@ -76,6 +85,7 @@ public class WifiReceiver {
     	IntentFilter mIntentFilter = new IntentFilter(); 
     	mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);		/*** 		WIFI Status			***/
     	mIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);	/*** 	(WIFI/3G) connect		***/
+    	mIntentFilter.addAction(StartCheckWifi);
     	
     	mContext.registerReceiver(mWifiReceiver, mIntentFilter); 
 	}
@@ -125,8 +135,8 @@ public class WifiReceiver {
 		
 	}
 	
-	private void StartCheckWifi() {
-		if(wifi_state == WifiManager.WIFI_STATE_ENABLED) {
+	private synchronized void StartCheckWifi() {
+		if(wifi_state == WifiManager.WIFI_STATE_ENABLED && WifiScan) {
 			new Thread() {  
 	            @Override  
 	            public void run() {  
