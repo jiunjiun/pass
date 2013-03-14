@@ -19,6 +19,7 @@
             android:dependency="wifi_auto_scan"
             android:entries="@array/wifi_update_interval"
             android:entryValues="@array/wifi_update_intervalValues"
+            android:defaultValue="30"
             android:title="@string/wifi_update_interval" 
             android:summary="@string/wifi_update_interval_summary" />
     </PreferenceCategory>
