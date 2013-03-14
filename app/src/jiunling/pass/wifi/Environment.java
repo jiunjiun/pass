@@ -32,7 +32,7 @@ public class Environment {
 		mWifiHelper.startScan();
 	}
 		
-	public void ScanHaveSpecifiedWifi() {
+	public synchronized void ScanHaveSpecifiedWifi() {
 		try {
 			UpdateWifiHelper();
 			if(mWifiHelper.getWifiStatus()) {
