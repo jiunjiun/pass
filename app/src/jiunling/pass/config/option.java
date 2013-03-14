@@ -1,6 +1,9 @@
 package jiunling.pass.config;
 
 public class option {
+	/***	root 	***/
+    public static boolean havaRoot 						= false;
+    
 	/***	wifi ¥\²v ¶V¤p¶V®t	***/
 	public static final int Wifi_Level 					= -70;
 	
