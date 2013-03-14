@@ -37,8 +37,8 @@ public class Environment {
 			UpdateWifiHelper();
 			if(mWifiHelper.getWifiStatus()) {
 				for (ScanResult result : mWifiHelper.getWifiList()) {
-					if(D) Log.e(TAG, result.toString());
-					if(D) Log.e(TAG, result.SSID + " " + result.level + " " + result.BSSID);
+//					if(D) Log.e(TAG, result.toString());
+//					if(D) Log.e(TAG, result.SSID + " " + result.level + " " + result.BSSID);
 					if(result.level > -70) {
 						WiFiDb dbHelper = new WiFiDb(mContext);
 						Cursor cursor 	= dbHelper.SWhere(new String[]{result.BSSID});
