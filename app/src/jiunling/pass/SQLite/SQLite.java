@@ -12,11 +12,12 @@ public class SQLite extends SQLiteOpenHelper {
 	
 	/***	SQLite initial	***/
 	private static final String DATABASE_NAME = "WifiPass.db";	//資料庫名稱
-	private static final int DATABASE_VERSION = 1;	//資料庫版本
+	private static final int DATABASE_VERSION = 3;	//資料庫版本
 
 	/***	SQLite Database	***/
 	public SQLiteDatabase db;
 	public final String RouterList = "routerList";
+	public final String PublicWifi = "publicWifi";
 	
 	public SQLite(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,11 +28,22 @@ public class SQLite extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 //		if(D) Log.e(TAG, "SQLite -- onCreate --");
-		String DATABASE_RouterList_TABLE =
+		String DATABASE_RouterList_TABLE = "";
+		DATABASE_RouterList_TABLE =
 			    "create table "+ RouterList +" (" +
 			        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			        "jo454 	TEXT, " +
 			        "au4a83 TEXT " +
+			        ");";
+		//建立config資料表，詳情請參考SQL語法
+		db.execSQL(DATABASE_RouterList_TABLE);
+		
+		DATABASE_RouterList_TABLE =
+			    "create table "+ PublicWifi +" (" +
+			        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			        "SSID   TEXT, " +
+			        "MAC    TEXT, " +
+			        "GPS    TEXT " +
 			        ");";
 		//建立config資料表，詳情請參考SQL語法
 		db.execSQL(DATABASE_RouterList_TABLE);
