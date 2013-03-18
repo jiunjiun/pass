@@ -28,7 +28,7 @@ import android.util.Log;
 public class PushServer implements Runnable {
 	
 	/***	Debugging	***/
-	private static final String TAG = "RequestServer";
+	private static final String TAG = "PushServer";
 	private static final boolean D = true;
 	
 	private String Url;
