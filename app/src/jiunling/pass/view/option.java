@@ -68,17 +68,17 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 		if(preference.getKey().equals(wifi_auto_scan_key)) {
 			WifiScan = (Boolean)newValue;
 			if(WifiScan) {
-				preference.setSummary(getResources().getString(R.string.wifi_auto_scan_enable));
+				preference.setSummary(getResources().getString(R.string.enable));
 			} else {
-				preference.setSummary(getResources().getString(R.string.wifi_auto_scan_disable));
+				preference.setSummary(getResources().getString(R.string.disable));
 			}
 			
 		} else if(preference.getKey().equals(wifi_notification_user_key)) {
 			NotificationUser = (Boolean)newValue;
 			if(NotificationUser) {
-				preference.setSummary(getResources().getString(R.string.wifi_notification_user_enable));
+				preference.setSummary(getResources().getString(R.string.enable));
 			} else {
-				preference.setSummary(getResources().getString(R.string.wifi_notification_user_disable));
+				preference.setSummary(getResources().getString(R.string.disable));
 			}
 		} else if(preference.getKey().equals(wifi_update_interval_key)) {
 			UpdateTime = Integer.parseInt((String) newValue);

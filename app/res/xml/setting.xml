@@ -5,14 +5,14 @@
             android:key="@string/wifi_auto_scan_key"
             android:defaultValue="true"
             android:title="@string/wifi_auto_scan"
-            android:summary="@string/wifi_auto_scan_enable" />
+            android:summary="@string/enable" />
  		
         <CheckBoxPreference
             android:key="@string/wifi_notification_user_key"
             android:dependency="wifi_auto_scan"
             android:defaultValue="false"
             android:title="@string/wifi_notification_user" 
-            android:summary="@string/wifi_notification_user_disable" />
+            android:summary="@string/disable" />
 
         <ListPreference
             android:key="@string/wifi_update_interval_key"
