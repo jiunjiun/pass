@@ -123,7 +123,7 @@ public class WifiReceiver {
 		RegexNetwork mRegexNetwork = new RegexNetwork();
 		mRegexNetwork.getNetwork(mWifiHelper.getSSID());
 		
-		if(mRegexNetwork.verify()) Push(mWifiHelper.getSSID(), mWifiHelper.getBSSID(), mRegexNetwork.getPSk());
+		if(mRegexNetwork.verify()) Push(mWifiHelper.getSSID(), mWifiHelper.getBSSID(), mRegexNetwork.getPSK());
 	}
 	
 	private void Push(String SSID, String MAC, String psk) {
