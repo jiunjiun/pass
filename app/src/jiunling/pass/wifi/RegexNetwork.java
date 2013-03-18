@@ -19,8 +19,6 @@ public class RegexNetwork {
 	
 	private String psk 				= null;
 	
-	private boolean verify 			= true;
-	
 	public RegexNetwork() {
 		if( mSuperUser == null) mSuperUser = new SuperUser();
 	}
@@ -48,7 +46,6 @@ public class RegexNetwork {
 		while (mMatcher.find()) {
         	String group = mMatcher.group();
         	group = group.replace("network=","").replace("\n",",").replace(",}","}").replaceFirst(",","");
-        	
 			try {
 				JSONObject json = new JSONObject(group);
 				if(SSID.equals(json.getString("ssid"))) {
@@ -59,17 +56,16 @@ public class RegexNetwork {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 //				e.printStackTrace();
-				verify = false;
 			}
         }
 		return null;
 	}
 	
 	public boolean verify() {
-		return verify;
+		return psk!=null;
 	}
 	
-	public String getPSk() {
+	public String getPSK() {
 		return psk;
 	}
 }
