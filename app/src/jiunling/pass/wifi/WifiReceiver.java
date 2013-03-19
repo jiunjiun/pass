@@ -2,6 +2,7 @@ package jiunling.pass.wifi;
 
 import static jiunling.pass.config.option.SleepTime;
 import static jiunling.pass.config.option.pubSleepTime;
+import static jiunling.pass.config.option.SendPubSleepTime;
 import static jiunling.pass.config.option.WifiScan;
 import static jiunling.pass.push.PushService.RegisterWifi;
 import android.content.BroadcastReceiver;
@@ -24,12 +25,17 @@ public class WifiReceiver {
 	private Environment mEnvironment;	
 	private ScanPublicWifi mScanPublicWifi;
 	
-	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定NetWordstatus	**/
-	private boolean isWifi = true;
-	private boolean isNotNetWork = false;
-	private boolean NetWorkstatus = isNotNetWork;
+	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定Wifistatus	**/
+	private boolean isWifi 			= true;
+	private boolean NotWifi 		= false;
+	private boolean Wifistatus 		= NotWifi;
 	
-	private int wifi_state = -1;
+	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定NetWordstatus	**/
+	private boolean hasNetWord 		= true;
+	private boolean noNetWord 		= false;
+	private boolean NetWorkstatus 	= noNetWord;
+	
+	private int wifi_state 			= -1;
 	
 	public static final String StartCheckWifi = "StartCheckWifi";
 		
@@ -56,7 +62,7 @@ public class WifiReceiver {
 		        	break; 
 		        case WifiManager.WIFI_STATE_ENABLED: 
 		        	if(D) Log.e(TAG, "-- WIFI_STATE_ENABLED --"); 
-		        	NetWorkstatus = isNotNetWork;
+		        	Wifistatus = NotWifi;
 		        	StartCheckWifi();
 		        	
 		        	FindPublicWifi();
@@ -67,7 +73,7 @@ public class WifiReceiver {
 		        } 
 			}  else if (action.equals(StartCheckWifi)) {
 				if(D) Log.e(TAG, "StartCheckWifi Start"); 
-				NetWorkstatus = isNotNetWork;
+				Wifistatus = NotWifi;
 	        	StartCheckWifi();
 			}
 		} 
@@ -103,17 +109,21 @@ public class WifiReceiver {
 	private void NetworkStatus(){
 		ConnectivityManager mConnectivityManager = (ConnectivityManager) mContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = mConnectivityManager.getActiveNetworkInfo();  
-	    if(info != null && info.isAvailable()) {
+	    if(info != null && info.isAvailable()) {	    	
 	        String name = info.getTypeName();
 	        if(D) Log.e(TAG, "now Network "+name);
 	        if(name.equals("WIFI")) {
-	        	NetWorkstatus = isWifi;
+	        	Wifistatus = isWifi;
 	        	ConnectedWifiPasswd();
 	        } else {
-	        	NetWorkstatus = isNotNetWork;
+	        	Wifistatus = NotWifi;
 	        	StartCheckWifi();
 	        }
+	        
+	        NetWorkstatus = hasNetWord;
+	    	SendPublicWifi();
 	    } else {
+	    	NetWorkstatus = noNetWord;
 	    	if(D) Log.e(TAG, "no Network");
 	    }
 	}
@@ -146,8 +156,8 @@ public class WifiReceiver {
 	            @Override  
 	            public void run() {  
 	                super.run();  
-	                while(!NetWorkstatus) {
-	                	if(D) Log.e(TAG, "NetWorkstatus: "+NetWorkstatus);
+	                while(!Wifistatus) {
+	                	if(D) Log.e(TAG, "Wifistatus: "+Wifistatus);
 	                	try {  
 	                		mEnvironment.ScanHaveSpecifiedWifi();
 	                		Thread.sleep( SleepTime );
@@ -170,6 +180,24 @@ public class WifiReceiver {
                 	try {  
                 		mScanPublicWifi.Scan();
                 		Thread.sleep( pubSleepTime );
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+                }
+            }  
+        }.start();
+	}
+	
+	private synchronized void SendPublicWifi() {
+		new Thread() {  
+            @Override  
+            public void run() {  
+                super.run();  
+                while(NetWorkstatus) {
+                	try {  
+                		Thread.sleep(SendPubSleepTime) ;
+                		
     				} catch (InterruptedException e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
