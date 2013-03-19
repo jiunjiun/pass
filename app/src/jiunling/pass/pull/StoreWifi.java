@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class StoreWifi {
 	/***	Debugging	***/
-	private static final String TAG = "PushService";
+	private static final String TAG = "StoreWifi";
 	private static final boolean D = true;
 	
 	private Context mContext;

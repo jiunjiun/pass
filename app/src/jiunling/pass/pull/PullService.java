@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class PullService {
 	/***	Debugging	***/
-	private static final String TAG = "PushService";
+	private static final String TAG = "PullService";
 	private static final boolean D = true;
 	
 	private Context mContext;
