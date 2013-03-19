@@ -25,7 +25,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onRegistered(Context context, String registrationId) {
     	if(D) Log.e(TAG, "Device registered: regId = " + registrationId);
         RegistrarId = registrationId;
-        Intent mIntent = new Intent("PushServer");
+        Intent mIntent = new Intent("PushService");
 	    mIntent.putExtra("Kind", Register);
 	    sendBroadcast(mIntent);
     }
