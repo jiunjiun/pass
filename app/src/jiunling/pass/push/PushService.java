@@ -31,7 +31,7 @@ public class PushService {
 		public void onReceive(Context context, Intent intent) {
 			String action = intent.getAction();
 			
-			if(action.equals("PushServer")) {
+			if(action.equals("PushService")) {
 				int Kind = intent.getIntExtra("Kind", 0);
 				String[] mParameter = intent.getStringArrayExtra("Parameter");
 				Push(Kind, mParameter);
@@ -50,7 +50,7 @@ public class PushService {
 		
 		/***	∫ ≈•		***/
     	IntentFilter mIntentFilter = new IntentFilter();
-    	mIntentFilter.addAction("PushServer");
+    	mIntentFilter.addAction("PushService");
     	
     	mContext.registerReceiver(mRequestServerReceiver, mIntentFilter); 
 	}
