@@ -4,9 +4,9 @@
     <string name="app_name">pass</string>
     <string name="hello_world">Hello world!</string>
     
-    <string name="menu_settings">設定</string>
     
-    
+    <string name="menu_update">更新</string>
+	<string name="menu_settings">設定</string>
     
     <!-- Option -->
     <string name="enable">開啟</string>
