@@ -1,7 +1,8 @@
 package jiunling.pass;
 
-import static jiunling.pass.service.BackgroundService.haveBackgroundService;
 import static jiunling.pass.config.option.havaRoot;
+import static jiunling.pass.push.PushService.Renew;
+import static jiunling.pass.service.BackgroundService.haveBackgroundService;
 import jiunling.pass.service.BackgroundService;
 import jiunling.pass.view.option;
 import android.content.Intent;
@@ -70,7 +71,13 @@ public class MainActivity extends SherlockActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+    	if(D) Log.e(TAG, "item.getItemId() " + item.getItemId());
     	switch(item.getItemId()) {
+    	case R.id.menu_update:
+    		Intent mIntent = new Intent("PushService");
+    		mIntent.putExtra("Kind", Renew);
+    	    sendBroadcast(mIntent);
+    		break;
     	case R.id.menu_settings:
     		startActivity(new Intent().setClass(this , option.class));
     		break;
