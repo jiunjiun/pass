@@ -3,10 +3,12 @@ package jiunling.pass.push;
 import static jiunling.pass.config.config.RegisterUrl;
 import static jiunling.pass.config.config.RegisterWifiUrl;
 import static jiunling.pass.config.config.RenewWifiUrl;
+import static jiunling.pass.config.config.RegisterPublicWifi;
 import static jiunling.pass.config.option.SleepTime;
 import static jiunling.pass.push.PushService.Register;
 import static jiunling.pass.push.PushService.RegisterWifi;
 import static jiunling.pass.push.PushService.Renew;
+import static jiunling.pass.push.PushService.RegisterPublicWifis;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,6 +61,9 @@ public class PushServer implements Runnable {
 			break;
 		case Renew:
 			Url = RenewWifiUrl;
+			break;
+		case RegisterPublicWifis:
+			Url = RegisterPublicWifi;
 			break;
 		}
 	}
