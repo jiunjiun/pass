@@ -11,8 +11,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import android.content.Context;
-
 public class RegisterWifi {
 	
 	/***	Debugging	***/
@@ -24,7 +22,7 @@ public class RegisterWifi {
 	
 	String[] mParameter;
 		
-	public RegisterWifi(Context mContext, String[] mParameter) {
+	public RegisterWifi(String[] mParameter) {
 		this.mParameter = mParameter;
 		save();
 	}

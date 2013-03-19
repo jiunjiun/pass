@@ -67,7 +67,7 @@ public class PushService {
 			mParams = mRegister.getParams();
 			break;
 		case RegisterWifi:
-			RegisterWifi mRegisterWifi = new RegisterWifi(mContext, mParameter);
+			RegisterWifi mRegisterWifi = new RegisterWifi(mParameter);
 			mParams = mRegisterWifi.getParams();
 			break;
 			
