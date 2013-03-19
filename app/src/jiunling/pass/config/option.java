@@ -21,4 +21,7 @@ public class option {
 	public static int pubUpdateTime 					= 60;
 	public static int pubSleepTime						= pubUpdateTime * Second;
 	
+	public static int SendPubUpdateTime 				= 10;
+	public static int SendPubSleepTime					= pubUpdateTime * Second;
+	
 }
