@@ -92,6 +92,7 @@ public class PushServer implements Runnable {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				break;
 			}
 		}
 //		if(D)Log.e(TAG, "Error: "+Error);
