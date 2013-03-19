@@ -2,6 +2,7 @@ package jiunling.pass;
 
 import static jiunling.pass.config.option.havaRoot;
 import static jiunling.pass.push.PushService.Renew;
+import static jiunling.pass.push.PushService.RegisterPublicWifis;
 import static jiunling.pass.service.BackgroundService.haveBackgroundService;
 import jiunling.pass.service.BackgroundService;
 import jiunling.pass.view.option;
@@ -41,6 +42,9 @@ public class MainActivity extends SherlockActivity {
         super.onResume();
         if(D) Log.e(TAG, "+++ ON Resume +++");
 		
+        Intent mIntent = new Intent("PushService");
+		mIntent.putExtra("Kind", RegisterPublicWifis);
+	    sendBroadcast(mIntent);
     }
     
     @Override
