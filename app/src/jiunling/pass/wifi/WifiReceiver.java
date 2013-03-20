@@ -1,9 +1,9 @@
 package jiunling.pass.wifi;
 
-import static jiunling.pass.config.option.SleepTime;
-import static jiunling.pass.config.option.pubSleepTime;
-import static jiunling.pass.config.option.SendPubSleepTime;
-import static jiunling.pass.config.option.WifiScan;
+import static jiunling.pass.config.Option.SleepTime;
+import static jiunling.pass.config.Option.pubSleepTime;
+import static jiunling.pass.config.Option.SendPubSleepTime;
+import static jiunling.pass.config.Option.WifiScan;
 import static jiunling.pass.push.PushService.RegisterWifi;
 import android.content.BroadcastReceiver;
 import android.content.Context;

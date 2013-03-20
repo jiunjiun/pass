@@ -1,6 +1,6 @@
 package jiunling.pass.root;
 
-import static jiunling.pass.config.option.havaRoot;
+import static jiunling.pass.config.Option.havaRoot;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

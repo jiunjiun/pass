@@ -1,8 +1,8 @@
 package jiunling.pass.view;
 
-import static jiunling.pass.config.option.NotificationUser;
-import static jiunling.pass.config.option.UpdateTime;
-import static jiunling.pass.config.option.WifiScan;
+import static jiunling.pass.config.Option.NotificationUser;
+import static jiunling.pass.config.Option.UpdateTime;
+import static jiunling.pass.config.Option.WifiScan;
 import static jiunling.pass.wifi.WifiReceiver.StartCheckWifi;
 import jiunling.pass.R;
 import android.content.Intent;
