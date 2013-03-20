@@ -1,9 +1,10 @@
 package jiunling.pass;
 
-import static jiunling.pass.config.option.havaRoot;
-import static jiunling.pass.push.PushService.Renew;
+import static jiunling.pass.config.Option.havaRoot;
 import static jiunling.pass.push.PushService.RegisterPublicWifis;
+import static jiunling.pass.push.PushService.Renew;
 import static jiunling.pass.service.BackgroundService.haveBackgroundService;
+import jiunling.pass.config.Option;
 import jiunling.pass.service.BackgroundService;
 import jiunling.pass.view.option;
 import android.content.Intent;
@@ -88,8 +89,11 @@ public class MainActivity extends SherlockActivity {
     	}
         return false;
     }
-    
-    private void init() {		
+        
+    private void init() {	
+    	/**		init option		**/
+    	new Option(this);
+    	
     	/**	 backgound Service	**/
     	if(haveBackgroundService){
     		Intent intent = new Intent(this, BackgroundService.class);
