@@ -18,7 +18,7 @@ public class WifiReceiver {
 
 	/***	Debugging	***/
 	private static final String TAG = "WifiReceiver";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	private Context mContext;
 	
@@ -35,9 +35,15 @@ public class WifiReceiver {
 	private boolean noNetWord 		= false;
 	private boolean NetWorkstatus 	= noNetWord;
 	
+	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定NetWordstatus	**/
+	private boolean NotData 	= false;
+	private boolean InData 		= true;
+	private boolean WifiData 	= NotData;
+	
 	private int wifi_state 			= -1;
 	
-	public static final String StartCheckWifi = "StartCheckWifi";
+	public static final String StartCheckWifi 	= "StartCheckWifi";
+	public static final String isDataWifi 		= "isDataWifi";
 		
 	public BroadcastReceiver mWifiReceiver = new BroadcastReceiver() {
 		@Override
@@ -71,12 +77,16 @@ public class WifiReceiver {
 		        	if(D) Log.e(TAG, "WIFI_STATE_UNKNOWN"); 
 		        	break; 
 		        } 
-			}  else if (action.equals(StartCheckWifi)) {
+			} else if (action.equals(StartCheckWifi)) {
 				if(D) Log.e(TAG, "StartCheckWifi Start"); 
 				Wifistatus = NotWifi;
 	        	StartCheckWifi();
+			} else if (action.equals(isDataWifi)) {
+				if(D) Log.e(TAG, "StartCheckWifi Start"); 
+				WifiData = InData;
 			}
-		} 
+			
+		}
 	};
     
 	public WifiReceiver(Context mContext) {
@@ -96,7 +106,8 @@ public class WifiReceiver {
     	IntentFilter mIntentFilter = new IntentFilter(); 
     	mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);		/*** 		WIFI Status			***/
     	mIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);	/*** 	(WIFI/3G) connect		***/
-    	mIntentFilter.addAction(StartCheckWifi);
+    	mIntentFilter.addAction(StartCheckWifi);							/**		callStartCheckWifi		***/
+    	mIntentFilter.addAction(isDataWifi);								/**			isDataWifi			***/
     	
     	mContext.registerReceiver(mWifiReceiver, mIntentFilter); 
 	}
@@ -114,7 +125,7 @@ public class WifiReceiver {
 	        if(D) Log.e(TAG, "now Network "+name);
 	        if(name.equals("WIFI")) {
 	        	Wifistatus = isWifi;
-	        	ConnectedWifiPasswd();
+	        	if(!WifiData) ConnectedWifiPasswd();
 	        } else {
 	        	Wifistatus = NotWifi;
 	        	StartCheckWifi();
@@ -156,6 +167,7 @@ public class WifiReceiver {
 	            @Override  
 	            public void run() {  
 	                super.run();  
+	                WifiData = NotData;
 	                while(!Wifistatus) {
 	                	if(D) Log.e(TAG, "Wifistatus: "+Wifistatus);
 	                	try {  
