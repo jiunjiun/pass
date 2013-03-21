@@ -18,7 +18,7 @@ public class WifiReceiver {
 
 	/***	Debugging	***/
 	private static final String TAG = "WifiReceiver";
-	private static final boolean D = false;
+	private static final boolean D = true;
 	
 	private Context mContext;
 	

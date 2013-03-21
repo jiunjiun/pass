@@ -12,7 +12,7 @@ public class Environment {
 	
 	/***	Debugging	***/
 	private static final String TAG = "Environment";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	private Context mContext;
 		
