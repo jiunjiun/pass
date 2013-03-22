@@ -23,10 +23,11 @@ public class Option {
 	
 	/**				hide			**/
 	/**		Wifi public(hide get)	**/
-	public static int pubUpdateTime 					= 60;
+	public static int pubUpdateTime 					= 60;						/** 	1 mins	**/
 	public static int pubSleepTime						= pubUpdateTime * Second;
 	
-	public static int SendPubUpdateTime 				= 10;
+
+	public static int SendPubUpdateTime 				= 1440;						/** 	1 hour	**/
 	public static int SendPubSleepTime					= pubUpdateTime * Second;
 	
 	
