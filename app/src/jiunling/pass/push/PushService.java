@@ -78,7 +78,7 @@ public class PushService {
 			
 		case RegisterPublicWifis:
 			RegisterPublicWifis mRegisterPublicWifis = new RegisterPublicWifis(mContext);
-//			mParams = mRegisterPublicWifis.getParams();
+			mParams = mRegisterPublicWifis.getParams();
 			break;
 		}
 		
