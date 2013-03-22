@@ -4,6 +4,7 @@ import static jiunling.pass.config.Option.SleepTime;
 import static jiunling.pass.config.Option.pubSleepTime;
 import static jiunling.pass.config.Option.SendPubSleepTime;
 import static jiunling.pass.config.Option.WifiScan;
+import static jiunling.pass.push.PushService.RegisterPublicWifis;
 import static jiunling.pass.push.PushService.RegisterWifi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -210,6 +211,10 @@ public class WifiReceiver {
                 	try {  
                 		Thread.sleep(SendPubSleepTime) ;
                 		
+                		Intent mIntent = new Intent("PushService");
+                		mIntent.putExtra("Kind", RegisterPublicWifis);
+                	    mContext.sendBroadcast(mIntent);
+                	    
     				} catch (InterruptedException e) {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
