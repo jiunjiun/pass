@@ -40,15 +40,16 @@ public class PushServer implements Runnable {
 	private List<NameValuePair> mParams;
 	
 	public PushServer(int kind, List<NameValuePair> params, Handler handler ) {
-
-		ServerUrl(kind);
-		if(D)Log.e(TAG, "URL: "+ Url);
-		this.mHandler = handler;
-		this.Kind = kind;
-		this.mParams = params;
-		
-		Thread mThread = new Thread(this); // 產生Thread物件
-		mThread.start();
+		if(!params.isEmpty()) {
+			ServerUrl(kind);
+			if(D)Log.e(TAG, "URL: "+ Url);
+			this.mHandler = handler;
+			this.Kind = kind;
+			this.mParams = params;
+			
+			Thread mThread = new Thread(this); // 產生Thread物件
+			mThread.start();
+		}
 	}
 	
 	private void ServerUrl(int kind) {
