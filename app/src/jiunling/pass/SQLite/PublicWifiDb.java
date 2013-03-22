@@ -64,4 +64,8 @@ public class PublicWifiDb extends SQLite {
 		}
 		return cursor;
 	}
+	
+	public long DeleteDB(){
+		return db.delete(PublicWifi, null, null);
+	}
 }
