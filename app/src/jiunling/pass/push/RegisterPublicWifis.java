@@ -49,11 +49,12 @@ public class RegisterPublicWifis {
 				Parameter = new HashMap<String, String>();
 				Parameter.put("SSID", cursor.getString(0));
 				Parameter.put("MAC", cursor.getString(1));
-				Parameter.put("GPS", cursor.getString(2));
+				Parameter.put("gps", cursor.getString(2));
 				mJSONArray.put(new JSONObject(Parameter));
 		        cursor.moveToNext();
 			}
 		}
+    	dbHelper.DeleteDB();
     	cursor.close();		//關閉Cursor
 		dbHelper.close();	//關閉資料庫，釋放記憶體
 	
