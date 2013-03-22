@@ -19,10 +19,12 @@ from controllers.home 	import home
 from controllers.api 	import register
 from controllers.api 	import wifi
 from controllers.api 	import renew
+from controllers.api 	import publicWifi
 
 app = webapp2.WSGIApplication([
     ('/', home),
 	('/api/register/', register),
 	('/api/wifi/', wifi),
 	('/api/renew/', renew),
+	('/api/publicWifi/', publicWifi),
 ], debug=True)
