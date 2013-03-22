@@ -31,8 +31,7 @@ public class PullService {
 	};
 	
 	public PullService(Context mContext){
-			this.mContext = mContext;
-		
+		this.mContext = mContext;
 		EnableReceiver();
 	}
 	
