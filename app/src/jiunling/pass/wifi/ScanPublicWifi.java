@@ -17,7 +17,7 @@ public class ScanPublicWifi {
 	
 	/***	Debugging	***/
 	private static final String TAG = "ScanPublicWifi";
-	private static final boolean D = true;
+	private static final boolean D = false;
 	
 	private Context mContext;
 
