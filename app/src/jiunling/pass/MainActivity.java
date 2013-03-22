@@ -43,9 +43,6 @@ public class MainActivity extends SherlockActivity {
         super.onResume();
         if(D) Log.e(TAG, "+++ ON Resume +++");
 		
-        Intent mIntent = new Intent("PushService");
-		mIntent.putExtra("Kind", RegisterPublicWifis);
-	    sendBroadcast(mIntent);
     }
     
     @Override
