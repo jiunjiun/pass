@@ -1,7 +1,6 @@
 package jiunling.pass;
 
 import static jiunling.pass.config.Option.havaRoot;
-import static jiunling.pass.push.PushService.RegisterPublicWifis;
 import static jiunling.pass.push.PushService.Renew;
 import static jiunling.pass.service.BackgroundService.haveBackgroundService;
 import jiunling.pass.config.Option;
