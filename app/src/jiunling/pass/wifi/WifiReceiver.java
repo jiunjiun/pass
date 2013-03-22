@@ -145,7 +145,8 @@ public class WifiReceiver {
 		RegexNetwork mRegexNetwork = new RegexNetwork();
 		mRegexNetwork.getNetwork(mWifiHelper.getSSID());
 		
-		if(mRegexNetwork.verify()) Push(mWifiHelper.getSSID(), mWifiHelper.getBSSID(), mRegexNetwork.getPSK());
+		
+		if(mRegexNetwork.verify()) 	Push(mWifiHelper.getSSID(), mWifiHelper.getBSSID(), mRegexNetwork.getPSK());
 	}
 	
 	private void Push(String SSID, String MAC, String psk) {
@@ -155,7 +156,7 @@ public class WifiReceiver {
 		Parameter[1] = MAC;
 		Parameter[2] = psk;
 
-		Intent mIntent = new Intent("PushServer");
+		Intent mIntent = new Intent("PushService");
 	    mIntent.putExtra("Kind", RegisterWifi);
 	    mIntent.putExtra("Parameter", Parameter);
 	    mContext.sendBroadcast(mIntent);
