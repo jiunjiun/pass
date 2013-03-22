@@ -121,9 +121,9 @@ class publicWifi(webapp2.RequestHandler):
 			form_data = 'publicWifi=%s&k=publicWifi' % (publicWifi)
 			result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 			
-			self.response.out.write(result.content)
+			# self.response.out.write(result.content)
 		except Exception, e: 
-			self.response.out.write(str(e))
-			# self.error(404)	
+			# self.response.out.write(str(e))
+			self.error(404)	
 		
 		
