@@ -103,12 +103,28 @@ class renew(webapp2.RequestHandler):
 			# self.response.out.write(str(e))
 			self.error(404)		
 		
+class publicWifi(webapp2.RequestHandler):	
+	def get(self):
+		self.error(404)	
 		
+	def post(self):
+		import json, sys
+		from google.appengine.api import urlfetch
+		from config import config	
 		
-		
-		
-		
-		
-		
+		sys.path.append('..')
+		SERVER_URL = config.WIFI_URL
+		try:
+			publicWifi 		= self.request.get('publicWifi')
+			publicWifi_arr 	= json.loads(publicWifi)
+			
+			form_data = 'publicWifi=%s&k=publicWifi' % (publicWifi)
+			result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
+			
+			self.response.out.write(result.content)
+			self.response.out.write('a')
+		except Exception, e: 
+			self.response.out.write(str(e))
+			# self.error(404)	
 		
 		
