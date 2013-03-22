@@ -122,7 +122,6 @@ class publicWifi(webapp2.RequestHandler):
 			result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 			
 			self.response.out.write(result.content)
-			self.response.out.write('a')
 		except Exception, e: 
 			self.response.out.write(str(e))
 			# self.error(404)	
