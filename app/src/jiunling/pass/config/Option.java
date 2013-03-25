@@ -23,13 +23,18 @@ public class Option {
 	
 	/**				hide			**/
 	/**		Wifi public(hide get)	**/
-	public static int pubUpdateTime 					= 60;						/** 	1 mins	**/
+	public static int pubUpdateTime 					= 60;							/** 	1 mins	**/
 	public static int pubSleepTime						= pubUpdateTime * Second;
 	
 
-	public static int SendPubUpdateTime 				= 1440;						/** 	1 hour	**/
+	public static int SendPubUpdateTime 				= 1440;							/** 	1 hour	**/
 	public static int SendPubSleepTime					= SendPubUpdateTime * Second;
 	
+	
+	public static int RemoveTime 						= 60;							/** 	1 mins	**/
+	public static int RemoveUpdateTime					= RemoveTime * Second;
+	public static int RssiLimit 						= -90;
+
 	
 	public Option(Context mContext) {
 		String wifi_auto_scan_key, wifi_notification_user_key, wifi_update_interval_key;
