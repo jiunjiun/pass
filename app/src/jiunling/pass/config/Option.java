@@ -28,7 +28,7 @@ public class Option {
 	
 
 	public static int SendPubUpdateTime 				= 1440;						/** 	1 hour	**/
-	public static int SendPubSleepTime					= pubUpdateTime * Second;
+	public static int SendPubSleepTime					= SendPubUpdateTime * Second;
 	
 	
 	public Option(Context mContext) {
