@@ -3,6 +3,7 @@ package jiunling.pass.wifi;
 import static jiunling.pass.config.Option.SleepTime;
 import static jiunling.pass.config.Option.pubSleepTime;
 import static jiunling.pass.config.Option.SendPubSleepTime;
+import static jiunling.pass.config.Option.RemoveUpdateTime;
 import static jiunling.pass.config.Option.WifiScan;
 import static jiunling.pass.push.PushService.RegisterPublicWifis;
 import static jiunling.pass.push.PushService.RegisterWifi;
@@ -83,7 +84,6 @@ public class WifiReceiver {
 				Wifistatus = NotWifi;
 	        	StartCheckWifi();
 			} else if (action.equals(isDataWifi)) {
-				if(D) Log.e(TAG, "StartCheckWifi Start"); 
 				WifiData = InData;
 			}
 			
@@ -127,6 +127,7 @@ public class WifiReceiver {
 	        if(name.equals("WIFI")) {
 	        	Wifistatus = isWifi;
 	        	if(!WifiData) ConnectedWifiPasswd();
+	        	MonitorWifi();
 	        } else {
 	        	Wifistatus = NotWifi;
 	        	StartCheckWifi();
@@ -161,6 +162,23 @@ public class WifiReceiver {
 	    mIntent.putExtra("Parameter", Parameter);
 	    mContext.sendBroadcast(mIntent);
 		
+	}
+	
+	private void MonitorWifi() {
+		new Thread() {  
+            @Override  
+            public void run() {  
+                super.run();  
+                while(Wifistatus) {
+                	try {  
+                		mEnvironment.MonitorWifi();
+                		Thread.sleep( RemoveUpdateTime );
+                	} catch (InterruptedException e) {
+                		e.printStackTrace();
+                	}
+                }
+            }
+		}.start();
 	}
 	
 	private synchronized void StartCheckWifi() {
