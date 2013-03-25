@@ -190,6 +190,10 @@ public class WifiHelper {
     public Integer getIP() {
         return (wifiInfo == null) ? null : wifiInfo.getIpAddress();
     }
+    
+    public Integer getRssi() {
+    	return (wifiInfo == null) ? null : wifiInfo.getRssi();
+    }
 
     /** 獲得當前連接的Ip address */
     public String getLocalIpAddress() {
