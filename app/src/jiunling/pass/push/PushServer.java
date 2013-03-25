@@ -42,7 +42,6 @@ public class PushServer implements Runnable {
 	public PushServer(int kind, List<NameValuePair> params, Handler handler ) {
 		if(!params.isEmpty()) {
 			ServerUrl(kind);
-			if(D)Log.e(TAG, "URL: "+ Url);
 			this.mHandler = handler;
 			this.Kind = kind;
 			this.mParams = params;
@@ -55,15 +54,19 @@ public class PushServer implements Runnable {
 	private void ServerUrl(int kind) {
 		switch(kind) {
 		case Register:
+			if(D) Log.e(TAG, "Register");
 			Url = RegisterUrl;
 			break;
 		case RegisterWifi:
+			if(D) Log.e(TAG, "RegisterWifi");
 			Url = RegisterWifiUrl;
 			break;
 		case Renew:
+			if(D) Log.e(TAG, "Renew");
 			Url = RenewWifiUrl;
 			break;
 		case RegisterPublicWifis:
+			if(D) Log.e(TAG, "RegisterPublicWifis");
 			Url = RegisterPublicWifi;
 			break;
 		}

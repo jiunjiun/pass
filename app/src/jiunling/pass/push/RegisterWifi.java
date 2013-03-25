@@ -11,13 +11,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 public class RegisterWifi {
 	
 	/***	Debugging	***/
-	private static final String TAG = "RegisterWifi";
-	private static final boolean D = true;
+//	private static final String TAG = "RegisterWifi";
+//	private static final boolean D = true;
 	
 	private Map<String, String> Parameter;
 	private JSONObject mJSONObjectParameter;

@@ -66,6 +66,7 @@ public class PushService {
 			Register mRegister = new Register(mContext);
 			mParams = mRegister.getParams();
 			break;
+			
 		case RegisterWifi:
 			RegisterWifi mRegisterWifi = new RegisterWifi(mParameter);
 			mParams = mRegisterWifi.getParams();
@@ -83,7 +84,6 @@ public class PushService {
 		}
 		
 		new PushServer(Kind, mParams, mHandler);
-		if(D) Log.e(TAG, "** PushServer ** ");
 	}
 	
 	/**		get Data	**/
