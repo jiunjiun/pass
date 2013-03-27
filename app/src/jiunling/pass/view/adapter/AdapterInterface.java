@@ -13,23 +13,29 @@ public class AdapterInterface {
 	/**		layout	**/
 	private ListView mListView;
 	
-//	public static final int Option_ListView  = 1;
+	public static final int WifiListDialog_ListView  = 1;
 	
 	public AdapterInterface(Activity activity , ListView mListView){
 		this.mActivity = activity;
 		this.mListView = mListView;
 	}
 	
-	public void ListViewKey(int Kind) {
-//		switch(Kind) {
-//		case Option_ListView:
-//			OptionListView();
-//			break;
-//		}
+	public AdapterInterface(Activity activity , ListView mListView, int Kind){
+		this.mActivity = activity;
+		this.mListView = mListView;
+		ListViewKey(Kind);
 	}
 	
-	private void OptionListView() {
-//		OptionListViewAdapter mOptionListViewAdapter = 
-//				new OptionListViewAdapter(mActivity, mListView);
+	public void ListViewKey(int Kind) {
+		switch(Kind) {
+		case WifiListDialog_ListView:
+			WifiListDialog();
+			break;
+		}
+	}
+	
+	private void WifiListDialog() {
+		WifiDialogListViewAdapter mWifiListDialogListViewAdapter = 
+				new WifiDialogListViewAdapter(mActivity, mListView);
 	}
 }
