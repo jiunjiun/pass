@@ -1,11 +1,7 @@
 package jiunling.pass.view;
 
-import static jiunling.pass.config.Option.NotificationUser;
-import static jiunling.pass.config.Option.UpdateTime;
-import static jiunling.pass.config.Option.WifiScan;
-import static jiunling.pass.wifi.WifiReceiver.StartCheckWifi;
 import jiunling.pass.R;
-import android.content.Intent;
+import jiunling.pass.config.Option;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -19,13 +15,15 @@ import com.actionbarsherlock.view.MenuItem;
 public class option extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 	
 	/***	Debugging	***/
-	private static final String TAG = "MainActivity";
+	private static final String TAG = "option";
 	private static final boolean D = true;
-	
-	
-	String wifi_auto_scan_key, wifi_notification_user_key, wifi_update_interval_key;
+
 	CheckBoxPreference wifi_auto_scan, wifi_notification_user;
 	ListPreference wifi_update_intervalValues; 
+	
+	private Option mOption				= null;
+	private boolean WifiScan			= Option.WifiScan;
+	private boolean NotificationUser	= Option.NotificationUser;
 	
 	@Override
 	@SuppressWarnings("deprecation")
@@ -35,13 +33,12 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		wifi_auto_scan_key			= getResources().getString(R.string.wifi_auto_scan_key);
-		wifi_notification_user_key	= getResources().getString(R.string.wifi_notification_user_key);
-		wifi_update_interval_key	= getResources().getString(R.string.wifi_update_interval_key);
+		/***	Option config	***/
+		OptionConfig();
 		
-		wifi_auto_scan 				= (CheckBoxPreference) findPreference(wifi_auto_scan_key);
-		wifi_notification_user 		= (CheckBoxPreference) findPreference(wifi_notification_user_key);
-		wifi_update_intervalValues 	= (ListPreference) findPreference(wifi_update_interval_key);
+		wifi_auto_scan 				= (CheckBoxPreference) findPreference(mOption.Key_WIFI_AUTO_SCAN);
+		wifi_notification_user 		= (CheckBoxPreference) findPreference(mOption.Key_WIFI_NOTIFICATION_USER);
+		wifi_update_intervalValues 	= (ListPreference) findPreference(mOption.Key_WIFI_UPDATE_INTERVAL);
 		
 		wifi_auto_scan.setOnPreferenceChangeListener(this);
 		wifi_notification_user.setOnPreferenceChangeListener(this);
@@ -54,6 +51,12 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 		if(NotificationUser) wifi_notification_user.setSummary(getResources().getString(R.string.enable));
 		else wifi_notification_user.setSummary(getResources().getString(R.string.disable));
 		
+	}
+	
+	private void OptionConfig() {
+		if(mOption == null) mOption = new Option(this);
+		WifiScan 			= (Boolean) mOption.getPreferences(Option.Kind_WIFI_AUTO_SCAN);
+		NotificationUser 	= (Boolean) mOption.getPreferences(Option.Kind_WIFI_NOTIFICATION_USER);
 	}
 	
 	@Override
@@ -73,24 +76,19 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 		if(D) Log.e(TAG, "Change preference.key: "+preference.getKey().toString());
 		if(D) Log.e(TAG, "Change preference.key: "+newValue.toString());
 		
-		if(preference.getKey().equals(wifi_auto_scan_key)) {
+		if(preference.getKey().equals(mOption.Key_WIFI_AUTO_SCAN)) {
 			WifiScan = (Boolean)newValue;
-			if(WifiScan) {
+			if(WifiScan) 
 				preference.setSummary(getResources().getString(R.string.enable));
-			} else {
+			else 
 				preference.setSummary(getResources().getString(R.string.disable));
-			}
-			
-		} else if(preference.getKey().equals(wifi_notification_user_key)) {
+
+		} else if(preference.getKey().equals(mOption.Key_WIFI_NOTIFICATION_USER)) {
 			NotificationUser = (Boolean)newValue;
-			if(NotificationUser) {
+			if(NotificationUser)
 				preference.setSummary(getResources().getString(R.string.enable));
-			} else {
+			else
 				preference.setSummary(getResources().getString(R.string.disable));
-			}
-		} else if(preference.getKey().equals(wifi_update_interval_key)) {
-			UpdateTime = Integer.parseInt((String) newValue);
-		    sendBroadcast(new Intent(StartCheckWifi));
 		}
 		return true;
 	}
