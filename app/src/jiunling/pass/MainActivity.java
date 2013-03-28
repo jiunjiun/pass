@@ -3,7 +3,6 @@ package jiunling.pass;
 import static jiunling.pass.config.Option.havaRoot;
 import static jiunling.pass.push.PushService.Renew;
 import static jiunling.pass.service.BackgroundService.haveBackgroundService;
-import jiunling.pass.config.Option;
 import jiunling.pass.service.BackgroundService;
 import jiunling.pass.view.option;
 import android.annotation.TargetApi;
@@ -89,9 +88,6 @@ public class MainActivity extends SherlockActivity {
     }
         
     private void init() {	
-    	/**		init option		**/
-    	new Option(this);
-    	
     	/**	 backgound Service	**/
     	if(haveBackgroundService){
     		Intent intent = new Intent(this, BackgroundService.class);
