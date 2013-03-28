@@ -46,6 +46,10 @@ public class WifiReceiver {
 	private boolean InData 			= true;
 	private boolean WifiDataStatus 	= NotData;
 	
+	private static boolean StartCheckWifiStatusStop		= false;
+	private static boolean StartCheckWifiStatusRunning	= true;
+	private static boolean StartCheckWifiStatus			= StartCheckWifiStatusStop;
+	
 	private int wifi_state 			= -1;
 	
 	public static final String WifiIsData 		= "WifiIsData";
@@ -79,7 +83,7 @@ public class WifiReceiver {
 		        case WifiManager.WIFI_STATE_ENABLED: 
 		        	if(D) Log.e(TAG, "-- WIFI_STATE_ENABLED --"); 
 		        	WifiStatus = NotWifi;
-		        	StartCheckWifi();
+		        	if(!StartCheckWifiStatus) StartCheckWifi();
 		        	
 		        	FindPublicWifi();
 		        	break; 
@@ -162,7 +166,7 @@ public class WifiReceiver {
 	        	Notifiy.NotifyAllCancel(mContext);
 	        } else {
 	        	WifiStatus = NotWifi;
-	        	StartCheckWifi();
+	        	if(!StartCheckWifiStatus) StartCheckWifi();
 	        }
 	        
 	        NetWorkStatus = hasNetWord;
@@ -218,21 +222,23 @@ public class WifiReceiver {
 	            @Override  
 	            public void run() {  
 	                super.run();  
+	                StartCheckWifiStatus = StartCheckWifiStatusRunning;
 	                WifiDataStatus = NotData;
 	                while(!WifiStatus) {
-	                	if(D) Log.e(TAG, "Wifistatus: "+WifiStatus);
+//	                	if(D) Log.e(TAG, "Wifistatus: "+WifiStatus);
 	                	try {  
 	                		mEnvironment.ScanHaveSpecifiedWifi();
-	                		if(D) Log.e(TAG, "Update: "+ SleepTime);
 	                		Thread.sleep( SleepTime );
 	    				} catch (InterruptedException e) {
 	    					// TODO Auto-generated catch block
 	    					e.printStackTrace();
 	    				}
 	                }
+	                StartCheckWifiStatus = StartCheckWifiStatusStop;
 	            }  
 	        }.start();
 		}
+		
 	}
 	
 	private synchronized void FindPublicWifi() {
