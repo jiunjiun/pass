@@ -10,7 +10,7 @@
         <CheckBoxPreference
             android:key="@string/wifi_notification_user_key"
             android:dependency="@string/wifi_auto_scan_key"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:title="@string/wifi_notification_user" 
             android:summary="@string/disable" />
 

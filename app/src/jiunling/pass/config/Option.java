@@ -14,7 +14,7 @@ public class Option {
 	
 	/**		Wifi setting	**/
 	public static boolean WifiScan						= true;
-	public static boolean NotificationUser				= false;
+	public static boolean NotificationUser				= true;
 	
 	public static final int Second 						= 1000;
 	public static int UpdateTime 						= 30;
