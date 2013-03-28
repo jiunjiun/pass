@@ -4,7 +4,7 @@ import static jiunling.pass.config.Option.havaRoot;
 import static jiunling.pass.push.PushService.Renew;
 import static jiunling.pass.service.BackgroundService.haveBackgroundService;
 import jiunling.pass.service.BackgroundService;
-import jiunling.pass.view.option;
+import jiunling.pass.view.Setting;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
@@ -81,7 +81,7 @@ public class MainActivity extends SherlockActivity {
     	    sendBroadcast(mIntent);
     		break;
     	case R.id.menu_settings:
-    		startActivity(new Intent().setClass(this , option.class));
+    		startActivity(new Intent().setClass(this , Setting.class));
     		break;
     	}
         return false;
