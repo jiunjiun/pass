@@ -12,7 +12,7 @@ import android.util.Log;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class option extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
+public class Setting extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 	
 	/***	Debugging	***/
 	private static final String TAG = "option";
