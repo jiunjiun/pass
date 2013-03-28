@@ -7,6 +7,7 @@ import static jiunling.pass.config.Option.RemoveUpdateTime;
 import static jiunling.pass.config.Option.WifiScan;
 import static jiunling.pass.push.PushService.RegisterPublicWifis;
 import static jiunling.pass.push.PushService.RegisterWifi;
+import jiunling.pass.utile.Notifiy;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,25 +28,25 @@ public class WifiReceiver {
 	private Environment mEnvironment;	
 	private ScanPublicWifi mScanPublicWifi;
 	
-	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定Wifistatus	**/
+	/**		在更新wifi，onReceive會捕捉到，判斷是不是wifi	**/
 	private boolean isWifi 			= true;
 	private boolean NotWifi 		= false;
-	private boolean Wifistatus 		= NotWifi;
+	private boolean WifiStatus 		= NotWifi;
 	
-	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定NetWordstatus	**/
+	/**		在更新wifi，onReceive會捕捉到，判斷是否有網路連線能力	**/
 	private boolean hasNetWord 		= true;
 	private boolean noNetWord 		= false;
-	private boolean NetWorkstatus 	= noNetWord;
+	private boolean NetWorkStatus 	= noNetWord;
 	
-	/**		在更新wifi，onReceive會捕捉到，因此要不讓他進入，所以設定NetWordstatus	**/
-	private boolean NotData 	= false;
-	private boolean InData 		= true;
-	private boolean WifiData 	= NotData;
+	/**		在更新wifi，onReceive會捕捉到，判斷是否為本機資料庫的網路	**/
+	private boolean NotData 		= false;
+	private boolean InData 			= true;
+	private boolean WifiDataStatus 	= NotData;
 	
 	private int wifi_state 			= -1;
 	
 	public static final String StartCheckWifi 	= "StartCheckWifi";
-	public static final String isDataWifi 		= "isDataWifi";
+	public static final String WifiIsData 		= "WifiIsData";
 		
 	public BroadcastReceiver mWifiReceiver = new BroadcastReceiver() {
 		@Override
@@ -61,6 +62,7 @@ public class WifiReceiver {
 		        switch (wifi_state) { 
 		        case WifiManager.WIFI_STATE_DISABLING: 
 		        	if(D) Log.e(TAG, "WIFI_STATE_DISABLING");  
+		        	Notifiy.NotifyAllCancel(context);
 		        	break; 
 		        case WifiManager.WIFI_STATE_DISABLED: 
 		        	if(D) Log.e(TAG, "WIFI_STATE_DISABLED"); 
@@ -70,7 +72,7 @@ public class WifiReceiver {
 		        	break; 
 		        case WifiManager.WIFI_STATE_ENABLED: 
 		        	if(D) Log.e(TAG, "-- WIFI_STATE_ENABLED --"); 
-		        	Wifistatus = NotWifi;
+		        	WifiStatus = NotWifi;
 		        	StartCheckWifi();
 		        	
 		        	FindPublicWifi();
@@ -81,10 +83,10 @@ public class WifiReceiver {
 		        } 
 			} else if (action.equals(StartCheckWifi)) {
 				if(D) Log.e(TAG, "StartCheckWifi Start"); 
-				Wifistatus = NotWifi;
+				WifiStatus = NotWifi;
 	        	StartCheckWifi();
-			} else if (action.equals(isDataWifi)) {
-				WifiData = InData;
+			} else if (action.equals(WifiIsData)) {
+				WifiDataStatus = InData;
 			}
 			
 		}
@@ -108,7 +110,7 @@ public class WifiReceiver {
     	mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);		/*** 		WIFI Status			***/
     	mIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);	/*** 	(WIFI/3G) connect		***/
     	mIntentFilter.addAction(StartCheckWifi);							/**		callStartCheckWifi		***/
-    	mIntentFilter.addAction(isDataWifi);								/**			isDataWifi			***/
+    	mIntentFilter.addAction(WifiIsData);								/**			isDataWifi			***/
     	
     	mContext.registerReceiver(mWifiReceiver, mIntentFilter); 
 	}
@@ -125,18 +127,19 @@ public class WifiReceiver {
 	        String name = info.getTypeName();
 	        if(D) Log.e(TAG, "now Network "+name);
 	        if(name.equals("WIFI")) {
-	        	Wifistatus = isWifi;
-	        	if(!WifiData) ConnectedWifiPasswd();
+	        	WifiStatus = isWifi;
+	        	if(!WifiDataStatus) ConnectedWifiPasswd();
 	        	MonitorWifi();
+	        	Notifiy.NotifyAllCancel(mContext);
 	        } else {
-	        	Wifistatus = NotWifi;
+	        	WifiStatus = NotWifi;
 	        	StartCheckWifi();
 	        }
 	        
-	        NetWorkstatus = hasNetWord;
+	        NetWorkStatus = hasNetWord;
 	    	SendPublicWifi();
 	    } else {
-	    	NetWorkstatus = noNetWord;
+	    	NetWorkStatus = noNetWord;
 	    	if(D) Log.e(TAG, "no Network");
 	    }
 	}
@@ -169,7 +172,7 @@ public class WifiReceiver {
             @Override  
             public void run() {  
                 super.run();  
-                while(Wifistatus) {
+                while(WifiStatus) {
                 	try {  
                 		mEnvironment.MonitorWifi();
                 		Thread.sleep( RemoveUpdateTime );
@@ -187,9 +190,9 @@ public class WifiReceiver {
 	            @Override  
 	            public void run() {  
 	                super.run();  
-	                WifiData = NotData;
-	                while(!Wifistatus) {
-	                	if(D) Log.e(TAG, "Wifistatus: "+Wifistatus);
+	                WifiDataStatus = NotData;
+	                while(!WifiStatus) {
+	                	if(D) Log.e(TAG, "Wifistatus: "+WifiStatus);
 	                	try {  
 	                		mEnvironment.ScanHaveSpecifiedWifi();
 	                		Thread.sleep( SleepTime );
@@ -226,7 +229,7 @@ public class WifiReceiver {
             @Override  
             public void run() {  
                 super.run();  
-                while(NetWorkstatus) {
+                while(NetWorkStatus) {
                 	try {  
                 		Thread.sleep(SendPubSleepTime) ;
                 		
