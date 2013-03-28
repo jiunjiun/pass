@@ -24,6 +24,6 @@
 		<string name="wifi_update_interval">更新時間</string>
 		<string name="wifi_update_interval_summary">設定更新時間</string>
 	
-	<string name="wifi_Dialog_title">目前偵測到的WiFi</string>
+	<string name="wifi_Dialog_title">偵測到可使用WiFi</string>
 	<string name="wifi_Dialog_info">WiFi資訊</string>
 </resources>
