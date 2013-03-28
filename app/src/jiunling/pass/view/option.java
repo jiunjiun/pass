@@ -46,6 +46,14 @@ public class option extends SherlockPreferenceActivity implements OnPreferenceCh
 		wifi_auto_scan.setOnPreferenceChangeListener(this);
 		wifi_notification_user.setOnPreferenceChangeListener(this);
 		wifi_update_intervalValues.setOnPreferenceChangeListener(this);
+		
+		
+		if(WifiScan) wifi_auto_scan.setSummary(getResources().getString(R.string.enable));
+		else wifi_auto_scan.setSummary(getResources().getString(R.string.disable));
+		
+		if(NotificationUser) wifi_notification_user.setSummary(getResources().getString(R.string.enable));
+		else wifi_notification_user.setSummary(getResources().getString(R.string.disable));
+		
 	}
 	
 	@Override
