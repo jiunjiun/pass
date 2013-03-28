@@ -21,8 +21,11 @@ public class WifiDialog extends SherlockFragmentActivity {
 		init();
 	}
 	
-	private void init(){
+	private void init() {
+		String WifiList = getIntent().getStringExtra("WifiList");
+		
 		ListView mListView = (ListView) findViewById(R.id.ListView);
-		new AdapterInterface(this, mListView, WifiListDialog_ListView);
+		AdapterInterface mAdapterInterface = new AdapterInterface(this, mListView, WifiListDialog_ListView);
+		mAdapterInterface.Update(WifiList);
     }
 }
