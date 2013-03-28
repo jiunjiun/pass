@@ -1,20 +1,23 @@
 package jiunling.pass.wifi;
 
-import static jiunling.pass.config.Option.SleepTime;
-import static jiunling.pass.config.Option.pubSleepTime;
-import static jiunling.pass.config.Option.SendPubSleepTime;
 import static jiunling.pass.config.Option.RemoveUpdateTime;
-import static jiunling.pass.config.Option.WifiScan;
+import static jiunling.pass.config.Option.Second;
+import static jiunling.pass.config.Option.SendPubSleepTime;
+import static jiunling.pass.config.Option.pubSleepTime;
 import static jiunling.pass.push.PushService.RegisterPublicWifis;
 import static jiunling.pass.push.PushService.RegisterWifi;
+import jiunling.pass.config.Option;
 import jiunling.pass.utile.Notifiy;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class WifiReceiver {
@@ -45,8 +48,11 @@ public class WifiReceiver {
 	
 	private int wifi_state 			= -1;
 	
-	public static final String StartCheckWifi 	= "StartCheckWifi";
 	public static final String WifiIsData 		= "WifiIsData";
+	
+	private Option 	mOption			= null;
+	private boolean WifiScan		= Option.WifiScan;
+	private int SleepTime			= Option.SleepTime;
 		
 	public BroadcastReceiver mWifiReceiver = new BroadcastReceiver() {
 		@Override
@@ -81,10 +87,6 @@ public class WifiReceiver {
 		        	if(D) Log.e(TAG, "WIFI_STATE_UNKNOWN"); 
 		        	break; 
 		        } 
-			} else if (action.equals(StartCheckWifi)) {
-				if(D) Log.e(TAG, "StartCheckWifi Start"); 
-				WifiStatus = NotWifi;
-	        	StartCheckWifi();
 			} else if (action.equals(WifiIsData)) {
 				WifiDataStatus = InData;
 			}
@@ -94,9 +96,17 @@ public class WifiReceiver {
     
 	public WifiReceiver(Context mContext) {
 		this.mContext = mContext;
+		
+		/***	Option config	***/
+		OptionConfig();
 
 		/***	Start Receiver	***/
 		EnableReceiver();
+		
+		/***	Start PreferenceChangeListener	***/
+		EnableSharedPreferences();
+		
+		
 		
 		mEnvironment 	= new Environment(mContext);
 		mScanPublicWifi = new ScanPublicWifi(mContext);
@@ -109,7 +119,6 @@ public class WifiReceiver {
     	IntentFilter mIntentFilter = new IntentFilter(); 
     	mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);		/*** 		WIFI Status			***/
     	mIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);	/*** 	(WIFI/3G) connect		***/
-    	mIntentFilter.addAction(StartCheckWifi);							/**		callStartCheckWifi		***/
     	mIntentFilter.addAction(WifiIsData);								/**			isDataWifi			***/
     	
     	mContext.registerReceiver(mWifiReceiver, mIntentFilter); 
@@ -117,6 +126,26 @@ public class WifiReceiver {
 
 	public void DisableReceiver() {
 		mContext.unregisterReceiver(mWifiReceiver);
+	}
+	
+	private void OptionConfig() {
+		if(mOption == null) mOption = new Option(mContext);
+		WifiScan 	= (Boolean) mOption.getPreferences(Option.Kind_WIFI_AUTO_SCAN);
+		SleepTime	= (Integer) mOption.getPreferences(Option.Kind_WIFI_UPDATE_INTERVAL) * Second;
+	}
+	
+	private void EnableSharedPreferences() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		prefs.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
+				@Override
+				public void onSharedPreferenceChanged(SharedPreferences mSharedPreferences, String key) {		            
+		            if(key.equals(mOption.Key_WIFI_AUTO_SCAN)) {
+		    			WifiScan = mSharedPreferences.getBoolean(key, false);
+		    		} else if(key.equals(mOption.Key_WIFI_UPDATE_INTERVAL)) {
+		    			SleepTime = Integer.parseInt(mSharedPreferences.getString(key, "")) * Second;
+		    		}
+				}
+			});
 	}
 		
 	/**		ÀË¬dºô¸ôª¬ºA(WIFI or 3G)	**/
@@ -148,7 +177,6 @@ public class WifiReceiver {
 		WifiHelper mWifiHelper = new WifiHelper(mContext);
 		RegexNetwork mRegexNetwork = new RegexNetwork();
 		mRegexNetwork.getNetwork(mWifiHelper.getSSID());
-		
 		
 		if(mRegexNetwork.verify()) 	Push(mWifiHelper.getSSID(), mWifiHelper.getBSSID(), mRegexNetwork.getPSK());
 	}
@@ -195,6 +223,7 @@ public class WifiReceiver {
 	                	if(D) Log.e(TAG, "Wifistatus: "+WifiStatus);
 	                	try {  
 	                		mEnvironment.ScanHaveSpecifiedWifi();
+	                		if(D) Log.e(TAG, "Update: "+ SleepTime);
 	                		Thread.sleep( SleepTime );
 	    				} catch (InterruptedException e) {
 	    					// TODO Auto-generated catch block

@@ -1,12 +1,12 @@
 package jiunling.pass.wifi;
 
-import static jiunling.pass.config.Option.NotificationUser;
 import static jiunling.pass.config.Option.RssiLimit;
 import static jiunling.pass.wifi.WifiReceiver.WifiIsData;
 
 import java.util.HashMap;
 
 import jiunling.pass.SQLite.WiFiDb;
+import jiunling.pass.config.Option;
 import jiunling.pass.utile.Notifiy;
 
 import org.json.JSONArray;
@@ -17,16 +17,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class Environment {
 	
 	/***	Debugging	***/
 	private static final String TAG = "Environment";
-	private static final boolean D = true;
+	private static final boolean D 	= true;
 	
 	private Context mContext;
 		
@@ -36,7 +39,10 @@ public class Environment {
 	private HashMap<String, String> mWifListHashMap;
 	private JSONArray mJSONArray;
 	
-	public final static String WifiConnectReceiver =	"WifiConnectReceiver";	
+	public final static String WifiConnectReceiver 	= "WifiConnectReceiver";	
+	
+	private Option 	mOption							= null;
+	private boolean NotificationUser				= Option.NotificationUser;
 	
 	public BroadcastReceiver mWifiReceiver = new BroadcastReceiver() {
 		@Override
@@ -54,11 +60,19 @@ public class Environment {
 	};
 	
 	public Environment( Context mContext ) {
-		this.mContext = mContext;
-		mWifiHelper = new WifiHelper(mContext);
+		this.mContext 	= mContext;
+		mWifiHelper 	= new WifiHelper(mContext);
 		mWifListHashMap = new HashMap<String, String>();
 		
+		/***	Option config	***/
+		OptionConfig();
+		
+		/***	Start Receiver	***/
 		EnableReceiver();
+		
+		/***	Start PreferenceChangeListener	***/
+		EnableSharedPreferences();
+		
 	}
 	
 	private void EnableReceiver() {
@@ -70,6 +84,24 @@ public class Environment {
 	
 	public void DisableReceiver() {
 		mContext.unregisterReceiver(mWifiReceiver);
+	}
+	
+	private void OptionConfig() {
+		if(mOption == null) mOption = new Option(mContext);
+		NotificationUser = (Boolean) mOption.getPreferences(Option.Kind_WIFI_NOTIFICATION_USER);
+		
+	}
+	
+	private void EnableSharedPreferences() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		prefs.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
+				@Override
+				public void onSharedPreferenceChanged(SharedPreferences mSharedPreferences, String key) {
+		            if(key.equals(mOption.Key_WIFI_NOTIFICATION_USER)) {
+		            	NotificationUser = mSharedPreferences.getBoolean(key, false);
+		    		}
+				}
+			});
 	}
 		
 	public synchronized void ScanHaveSpecifiedWifi() {
@@ -225,7 +257,7 @@ public class Environment {
 		} catch(Exception e) {
 			if(D) Log.e(TAG, "err: "+e);
 		}
-	}
+	}	
 }
 
 
