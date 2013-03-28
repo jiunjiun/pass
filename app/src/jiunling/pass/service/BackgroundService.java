@@ -14,14 +14,14 @@ public class BackgroundService extends Service {
 	
 	/***	Debugging	***/
 	private static final String TAG = "BackgroundService";
-	private static final boolean D = true;
+	private static final boolean D 	= true;
 	
 	
-	private GCM mGCM = null;
-	private WifiReceiver mWifiReceiver = null;
-	private PullService mPullService = null;
-	private PushService mPushService = null;
-	public static GPS mGPS = null;
+	private GCM mGCM 					= null;
+	private WifiReceiver mWifiReceiver 	= null;
+	private PullService mPullService 	= null;
+	private PushService mPushService 	= null;
+	public static GPS mGPS 				= null;
 	
 	
 	/***	Background config State		***/
@@ -37,15 +37,11 @@ public class BackgroundService extends Service {
 	public void onStart(Intent intent, int startId) {
 		if(D) Log.e(TAG, "onStart");
 		
-		if(mGPS == null) mGPS = new GPS(this);
-		
 		haveBackgroundService = false;
-		
-		/***	Receiver	***/
-		PullService_Receiver();
-		PushService_Receiver();
-		GCM_Receiver();
-		WiFi_Receiver();
+
+		if(mGPS == null) mGPS = new GPS(this);
+		    	
+		EnableReceiver();
 	}
 	
 	@Override
@@ -54,6 +50,14 @@ public class BackgroundService extends Service {
 		super.onDestroy();
 		if(D) Log.e(TAG, "onDestroy");
 		DisableReceiver();
+	}
+	
+	private void EnableReceiver() {
+		/***	Receiver	***/
+		PullService_Receiver();
+		PushService_Receiver();
+		GCM_Receiver();
+		WiFi_Receiver();
 	}
 	
 	private void PullService_Receiver() {
