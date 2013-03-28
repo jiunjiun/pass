@@ -164,8 +164,10 @@ public class Environment {
 			}
 		} else {
 			try {
-				JSONObject mJSONObject = mJSONArray.getJSONObject(0);
-				WifiConnect(mJSONObject);
+				if(mJSONArray.length() != 0) {
+					JSONObject mJSONObject = mJSONArray.getJSONObject(0);
+					WifiConnect(mJSONObject);
+				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
