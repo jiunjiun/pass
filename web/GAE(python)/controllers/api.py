@@ -40,15 +40,16 @@ class register(webapp2.RequestHandler):
 			reg_arr			= json.loads(reg)
 			reg_arr['gps'] 	= json.loads(reg_arr['gps']) 
 
-			if len(reg_arr['email']) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", reg_arr['email']) and len(reg_arr['registrarId']) > 0 and len(reg_arr['gps']) > 0 and len(reg_arr['gps']['lat']) > 0 and len(reg_arr['gps']['long']) > 0:
+			if len(reg_arr['email']) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", reg_arr['email']) and len(reg_arr['registrarId']) > 0 and len(reg_arr['gps']) > 0 and len(reg_arr['gps']['lat']) > 0 and len(reg_arr['gps']['lon']) > 0:
 				form_data 	= 'reg=%s&k=reg' % (reg)
 				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 				
 				# if result.status_code == 200:
 				# self.response.out.write(SERVER_URL)
-				# self.response.out.write(result.content)
+				self.response.out.write(result.content)
 		except Exception, e: 
-			self.error(404)
+			self.response.out.write(str(e))
+			# self.error(404)
 
 		
 class wifi(webapp2.RequestHandler):	
@@ -73,9 +74,10 @@ class wifi(webapp2.RequestHandler):
 				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 				
 				# if result.status_code == 200:
-					# self.response.out.write(result.content)
+				self.response.out.write(result.content)
 		except Exception, e: 
-			self.error(404)
+			self.response.out.write(str(e))
+			# self.error(404)
 		
 
 class renew(webapp2.RequestHandler):	
@@ -98,10 +100,10 @@ class renew(webapp2.RequestHandler):
 				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 				
 				# if result.status_code == 200:
-				# self.response.out.write(result.content)
+				self.response.out.write(result.content)
 		except Exception, e: 
-			# self.response.out.write(str(e))
-			self.error(404)		
+			self.response.out.write(str(e))
+			# self.error(404)		
 		
 class publicWifi(webapp2.RequestHandler):	
 	def get(self):
@@ -121,9 +123,9 @@ class publicWifi(webapp2.RequestHandler):
 			form_data = 'publicWifi=%s&k=publicWifi' % (publicWifi)
 			result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 			
-			# self.response.out.write(result.content)
+			self.response.out.write(result.content)
 		except Exception, e: 
-			# self.response.out.write(str(e))
-			self.error(404)	
+			self.response.out.write(str(e))
+			# self.error(404)	
 		
 		
