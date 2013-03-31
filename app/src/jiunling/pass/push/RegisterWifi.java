@@ -44,7 +44,7 @@ public class RegisterWifi {
 		Map<String, String> gps_params = new HashMap<String, String>();
 		if(mGPS != null) {
 			gps_params.put("lat", mGPS.getLatitude());
-			gps_params.put("long", mGPS.getLongitude());
+			gps_params.put("lon", mGPS.getLongitude());
 		}
 		JSONObject mJSONGPS = new JSONObject(gps_params);
 		return mJSONGPS.toString();
