@@ -53,13 +53,14 @@ public class ScanPublicWifi {
 		if(D) Log.e(TAG, "SSID: "+ SSID +" MAC "+ MAC +" GPS " + GPS);
 		long l = mPublicWifiDb.Create(SSID, MAC, GPS);
 		if(D) Log.e(TAG, "return: "+ l);
+		mPublicWifiDb.close();
 	}
 	
 	private String getGPS() {
 		Map<String, String> gps_params = new HashMap<String, String>();
 		if(mGPS != null) {
 			gps_params.put("lat", mGPS.getLatitude());
-			gps_params.put("long", mGPS.getLongitude());
+			gps_params.put("lon", mGPS.getLongitude());
 		}
 		JSONObject mJSONGPS = new JSONObject(gps_params);
 		return mJSONGPS.toString();
