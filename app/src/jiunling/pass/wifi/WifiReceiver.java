@@ -57,7 +57,9 @@ public class WifiReceiver {
 	private Option 	mOption			= null;
 	private boolean WifiScan		= Option.WifiScan;
 	private int SleepTime			= Option.SleepTime;
-		
+	
+	private SharedPreferences.OnSharedPreferenceChangeListener listener;
+	
 	public BroadcastReceiver mWifiReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -82,7 +84,7 @@ public class WifiReceiver {
 		        	break; 
 		        case WifiManager.WIFI_STATE_ENABLED: 
 		        	if(D) Log.e(TAG, "-- WIFI_STATE_ENABLED --"); 
-		        	WifiStatus = NotWifi;
+//		        	WifiStatus = NotWifi;
 		        	if(!StartCheckWifiStatus) StartCheckWifi();
 		        	
 		        	FindPublicWifi();
@@ -109,8 +111,6 @@ public class WifiReceiver {
 		
 		/***	Start PreferenceChangeListener	***/
 		EnableSharedPreferences();
-		
-		
 		
 		mEnvironment 	= new Environment(mContext);
 		mScanPublicWifi = new ScanPublicWifi(mContext);
@@ -140,16 +140,19 @@ public class WifiReceiver {
 	
 	private void EnableSharedPreferences() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-		prefs.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
-				@Override
-				public void onSharedPreferenceChanged(SharedPreferences mSharedPreferences, String key) {		            
-		            if(key.equals(mOption.Key_WIFI_AUTO_SCAN)) {
-		    			WifiScan = mSharedPreferences.getBoolean(key, false);
-		    		} else if(key.equals(mOption.Key_WIFI_UPDATE_INTERVAL)) {
-		    			SleepTime = Integer.parseInt(mSharedPreferences.getString(key, "")) * Second;
-		    		}
+		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			public void onSharedPreferenceChanged(SharedPreferences mSharedPreferences, String key) {
+				if(key.equals(mOption.Key_WIFI_AUTO_SCAN)) {
+					WifiScan = mSharedPreferences.getBoolean(key, false);
+					if(!StartCheckWifiStatus) StartCheckWifi();
+					if(!WifiScan) Notifiy.NotifyAllCancel(mContext);
+				} else if(key.equals(mOption.Key_WIFI_UPDATE_INTERVAL)) {
+					SleepTime = Integer.parseInt(mSharedPreferences.getString(key, "")) * Second;
 				}
-			});
+				if(D) Log.e(TAG, "WifiScan: "+ WifiScan+ " SleepTime: "+SleepTime);
+			}
+		};
+		prefs.registerOnSharedPreferenceChangeListener(listener);
 	}
 		
 	/**		ÀË¬dºô¸ôª¬ºA(WIFI or 3G)	**/
@@ -224,9 +227,8 @@ public class WifiReceiver {
 	                super.run();  
 	                StartCheckWifiStatus = StartCheckWifiStatusRunning;
 	                WifiDataStatus = NotData;
-	                while(!WifiStatus) {
+	                while(!WifiStatus && WifiScan) {
 	                	if(D) Log.d(TAG, "StartCheckWifi Worker");
-//	                	if(D) Log.e(TAG, "Wifistatus: "+WifiStatus);
 	                	try {  
 	                		mEnvironment.ScanHaveSpecifiedWifi();
 	                		Thread.sleep( SleepTime );
@@ -236,7 +238,7 @@ public class WifiReceiver {
 	    				}
 	                }
 	                StartCheckWifiStatus = StartCheckWifiStatusStop;
-	                if(D) Log.d(TAG, "FindPublicWifi Stop Worker");
+	                if(D) Log.d(TAG, "StartCheckWifi Stop Worker");
 	            }  
 	        }.start();
 		}

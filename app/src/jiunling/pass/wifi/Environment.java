@@ -18,7 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
@@ -42,7 +41,10 @@ public class Environment {
 	public final static String WifiConnectReceiver 	= "WifiConnectReceiver";	
 	
 	private Option 	mOption							= null;
+	private boolean WifiScan						= Option.WifiScan;
 	private boolean NotificationUser				= Option.NotificationUser;
+	
+	private SharedPreferences.OnSharedPreferenceChangeListener listener;
 	
 	public BroadcastReceiver mWifiReceiver = new BroadcastReceiver() {
 		@Override
@@ -93,15 +95,17 @@ public class Environment {
 	}
 	
 	private void EnableSharedPreferences() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-		prefs.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
-				@Override
-				public void onSharedPreferenceChanged(SharedPreferences mSharedPreferences, String key) {
-		            if(key.equals(mOption.Key_WIFI_NOTIFICATION_USER)) {
-		            	NotificationUser = mSharedPreferences.getBoolean(key, false);
-		    		}
-				}
-			});
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);		
+		listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			public void onSharedPreferenceChanged(SharedPreferences mSharedPreferences, String key) {
+				if(key.equals(mOption.Key_WIFI_NOTIFICATION_USER)) {
+	            	NotificationUser = mSharedPreferences.getBoolean(key, false);
+	    		} else if(key.equals(mOption.Key_WIFI_AUTO_SCAN)) {
+	    			WifiScan = mSharedPreferences.getBoolean(key, false);
+	    		}
+			}
+		};
+		prefs.registerOnSharedPreferenceChangeListener(listener);
 	}
 		
 	public synchronized void ScanHaveSpecifiedWifi() {
@@ -160,7 +164,7 @@ public class Environment {
 			} else {
 				mWifListHashMap.put("Wifi", mJSONArray.toString());
 				JSONObject mJSONObjectParameter = new JSONObject(mWifListHashMap);
-				Notifiy.NotifyMsg(mContext, Notifiy.NotifyUser, mJSONObjectParameter.toString());
+				if(WifiScan) Notifiy.NotifyMsg(mContext, Notifiy.NotifyUser, mJSONObjectParameter.toString());
 			}
 		} else {
 			try {
