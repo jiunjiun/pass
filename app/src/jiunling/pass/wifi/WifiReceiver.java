@@ -153,7 +153,7 @@ public class WifiReceiver {
 	}
 		
 	/**		ÀË¬dºô¸ôª¬ºA(WIFI or 3G)	**/
-	private void NetworkStatus(){
+	private void NetworkStatus() {
 		ConnectivityManager mConnectivityManager = (ConnectivityManager) mContext.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = mConnectivityManager.getActiveNetworkInfo();  
 	    if(info != null && info.isAvailable()) {	    	
@@ -225,6 +225,7 @@ public class WifiReceiver {
 	                StartCheckWifiStatus = StartCheckWifiStatusRunning;
 	                WifiDataStatus = NotData;
 	                while(!WifiStatus) {
+	                	if(D) Log.d(TAG, "StartCheckWifi Worker");
 //	                	if(D) Log.e(TAG, "Wifistatus: "+WifiStatus);
 	                	try {  
 	                		mEnvironment.ScanHaveSpecifiedWifi();
@@ -235,6 +236,7 @@ public class WifiReceiver {
 	    				}
 	                }
 	                StartCheckWifiStatus = StartCheckWifiStatusStop;
+	                if(D) Log.d(TAG, "FindPublicWifi Stop Worker");
 	            }  
 	        }.start();
 		}
@@ -248,6 +250,7 @@ public class WifiReceiver {
                 super.run();  
                 while(wifi_state == WifiManager.WIFI_STATE_ENABLED) {
                 	try {  
+                		if(D) Log.i(TAG, "FindPublicWifi Worker");
                 		mScanPublicWifi.Scan();
                 		Thread.sleep( pubSleepTime );
     				} catch (InterruptedException e) {
@@ -255,6 +258,7 @@ public class WifiReceiver {
     					e.printStackTrace();
     				}
                 }
+                if(D) Log.i(TAG, "FindPublicWifi Stop Worker");
             }  
         }.start();
 	}
@@ -266,6 +270,7 @@ public class WifiReceiver {
                 super.run();  
                 while(NetWorkStatus) {
                 	try {  
+                		if(D) Log.w(TAG, "SendPublicWifi Worker");
                 		Thread.sleep(SendPubSleepTime) ;
                 		
                 		Intent mIntent = new Intent("PushService");
@@ -277,6 +282,7 @@ public class WifiReceiver {
     					e.printStackTrace();
     				}
                 }
+                if(D) Log.w(TAG, "SendPublicWifi Stop Worker");
             }  
         }.start();
 	}

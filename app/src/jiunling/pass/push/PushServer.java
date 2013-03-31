@@ -83,7 +83,7 @@ public class PushServer implements Runnable {
 				httpRequest.setEntity(new UrlEncodedFormEntity(mParams, HTTP.UTF_8));
 				HttpResponse mHttpResponse = new DefaultHttpClient().execute(httpRequest);
 				
-				if(mHttpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+				if(mHttpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 					result = EntityUtils.toString(mHttpResponse.getEntity());
 					if(D) Log.e(TAG, "-- result:"+result);
 //					Error = ServerNoError;
