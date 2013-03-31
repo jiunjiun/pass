@@ -1,6 +1,7 @@
 package jiunling.pass.push;
 
 import static jiunling.pass.config.config.Email;
+import static jiunling.pass.service.BackgroundService.mGPS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,13 +48,23 @@ public class RenewWifi {
 	private void renew() {
 		Parameter = new HashMap<String, String>();
 		Parameter.put("email", Email);
+		Parameter.put("gps", getGPS());
 	}
 	
+	private String getGPS() {
+		Map<String, String> gps_params = new HashMap<String, String>();
+		if(mGPS != null) {
+			gps_params.put("lat", mGPS.getLatitude());
+			gps_params.put("lon", mGPS.getLongitude());
+		}
+		JSONObject mJSONGPS = new JSONObject(gps_params);
+		return mJSONGPS.toString();
+	}
 	
 	public List<NameValuePair> getParams() {
 		List<NameValuePair> mParams = new ArrayList<NameValuePair>();
 		mJSONObjectParameter = new JSONObject(Parameter);
-		mParams.add(new BasicNameValuePair("user", mJSONObjectParameter.toString()));	
+		mParams.add(new BasicNameValuePair("renew", mJSONObjectParameter.toString()));	
 		return mParams;
 	}
 }
