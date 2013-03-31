@@ -3,13 +3,13 @@ package jiunling.pass;
 import static jiunling.pass.config.Option.havaRoot;
 import static jiunling.pass.push.PushService.Renew;
 import static jiunling.pass.service.BackgroundService.haveBackgroundService;
+import jiunling.pass.config.Option;
 import jiunling.pass.service.BackgroundService;
 import jiunling.pass.view.Setting;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -21,6 +21,8 @@ public class MainActivity extends SherlockActivity {
 	/***	Debugging	***/
 	private static final String TAG = "MainActivity";
 	private static final boolean D = true;
+	
+	private TextView tvWifiScan, tvNotify, tvUpdatetime;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,6 @@ public class MainActivity extends SherlockActivity {
         return super.onCreateOptionsMenu(menu);
     }
     
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch(item.getItemId()) {
@@ -93,5 +94,22 @@ public class MainActivity extends SherlockActivity {
     		Intent intent = new Intent(this, BackgroundService.class);
     	    startService(intent);
     	}
+    	
+    	findViewById();
+    }
+    
+    private void findViewById() {
+    	tvWifiScan = (TextView) findViewById(R.id.WifiScan);
+    	tvNotify = (TextView) findViewById(R.id.NotificationUser);
+    	tvUpdatetime = (TextView) findViewById(R.id.UpdateTime);
+    	
+    	Option mOption = new Option(this);
+    	boolean NotificationUser 	= (Boolean) mOption.getPreferences(Option.Kind_WIFI_NOTIFICATION_USER);
+    	boolean WifiScan 			= (Boolean) mOption.getPreferences(Option.Kind_WIFI_AUTO_SCAN);
+		int 	SleepTime			= (Integer) mOption.getPreferences(Option.Kind_WIFI_UPDATE_INTERVAL);
+		
+		tvWifiScan.setText("WifiScan: "+WifiScan);
+		tvNotify.setText("NotificationUser: "+ NotificationUser);
+		tvUpdatetime.setText("SleepTime: "+ SleepTime);
     }
 }
