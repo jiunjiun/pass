@@ -92,11 +92,12 @@ class renew(webapp2.RequestHandler):
 		sys.path.append('..')
 		SERVER_URL = config.WIFI_URL
 		try:
-			user 			= self.request.get('user')
-			user_arr		= json.loads(user)
+			renew 			= self.request.get('renew')
+			user_arr		= json.loads(renew)
+			user_arr['gps'] 	= json.loads(user_arr['gps']) 
 			
-			if len(user_arr['email']) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", user_arr['email']):
-				form_data = 'user=%s&k=renew' % (user)
+			if len(user_arr['email']) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", user_arr['email']) and len(user_arr['gps']) > 0 and len(user_arr['gps']['lat']) > 0 and len(user_arr['gps']['lon']) > 0:
+				form_data = 'renew=%s&k=renew' % (renew)
 				result = urlfetch.fetch(url=SERVER_URL, payload=form_data, method=urlfetch.POST)
 				
 				# if result.status_code == 200:
