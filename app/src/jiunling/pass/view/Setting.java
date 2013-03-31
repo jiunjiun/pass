@@ -15,8 +15,8 @@ import com.actionbarsherlock.view.MenuItem;
 public class Setting extends SherlockPreferenceActivity implements OnPreferenceChangeListener {
 	
 	/***	Debugging	***/
-	private static final String TAG = "option";
-	private static final boolean D = true;
+	private static final String TAG = "Setting";
+	private static final boolean D = false;
 
 	CheckBoxPreference wifi_auto_scan, wifi_notification_user;
 	ListPreference wifi_update_intervalValues; 

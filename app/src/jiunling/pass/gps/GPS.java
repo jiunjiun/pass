@@ -10,7 +10,7 @@ import android.util.Log;
 public class GPS implements LocationListener {
 	/***	Debugging	***/
 	private static final String TAG = "GPS";
-	private static final boolean D = false;
+	private static final boolean D = true;
 	
 	private LocationManager mLocationManager;
 	private Location mLocation = null;
@@ -23,6 +23,7 @@ public class GPS implements LocationListener {
 	public void onLocationChanged(Location mLocation) {
 		// TODO Auto-generated method stub
 		this.mLocation = mLocation;
+		if(D) Log.e(TAG, "AGPS: "+mLocation.getLatitude() + "," +mLocation.getLongitude());
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class GPS implements LocationListener {
 	
 	public String getLoation() {
 		if( mLocation != null) {
-			if(D) Log.e(TAG, "AGPS: "+mLocation.getLatitude() + "," +mLocation.getLongitude());
+//			if(D) Log.e(TAG, "AGPS: "+mLocation.getLatitude() + "," +mLocation.getLongitude());
 			return mLocation.getLatitude() + "," +mLocation.getLongitude();
 		} 
 		return "";
