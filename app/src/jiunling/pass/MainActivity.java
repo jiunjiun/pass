@@ -22,7 +22,7 @@ public class MainActivity extends SherlockActivity {
 	private static final String TAG = "MainActivity";
 	private static final boolean D = true;
 	
-	private TextView0 tvWifiScan, tvNotify, tvUpdatetime;
+	private TextView tvWifiScan, tvNotify, tvUpdatetime;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
